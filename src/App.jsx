@@ -137,8 +137,8 @@ const ViewHeader = ({ title, subtitle, action, actionLabel }) => (
       {subtitle && <div style={{ fontFamily:T.sans, fontSize:11, color:T.w40, marginTop:2 }}>{subtitle}</div>}
     </div>
     {action && (
-      <button onClick={action} style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.bg,
-        background:T.teal, border:'none', padding:'7px 14px', borderRadius:5, cursor:'pointer',
+      <button onClick={action} style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.bg,
+        background:C.teal, border:'none', padding:'7px 14px', borderRadius:5, cursor:'pointer',
         display:'flex', alignItems:'center', gap:6 }}>
         {actionLabel}
       </button>
@@ -148,10 +148,10 @@ const ViewHeader = ({ title, subtitle, action, actionLabel }) => (
 
 /* ── Card container ── */
 const SectionCard = ({ title, action, children }) => (
-  <div style={{ background:T.surface, border:`1px solid ${T.border}`, borderRadius:8, overflow:'hidden', marginBottom:16 }}>
-    <div style={{ padding:'10px 14px', borderBottom:`1px solid ${T.border}`, display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-      <span style={{ fontFamily:T.sans, fontSize:11, fontWeight:700, color:T.w70, letterSpacing:'0.04em' }}>{title}</span>
-      {action && <span style={{ fontFamily:T.sans, fontSize:10, color:T.teal, cursor:'pointer' }}>{action}</span>}
+  <div style={{ background:C.surface, border:`1px solid ${C.border}`, borderRadius:8, overflow:'hidden', marginBottom:16 }}>
+    <div style={{ padding:'10px 14px', borderBottom:`1px solid ${C.border}`, display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+      <span style={{ fontFamily:C.sans, fontSize:11, fontWeight:700, color:C.w70, letterSpacing:'0.04em' }}>{title}</span>
+      {action && <span style={{ fontFamily:C.sans, fontSize:10, color:C.teal, cursor:'pointer' }}>{action}</span>}
     </div>
     {children}
   </div>
@@ -160,7 +160,7 @@ const SectionCard = ({ title, action, children }) => (
 /* ══════════════════════════════════════════
    PATIENTS VIEW
 ══════════════════════════════════════════ */
-const PatientsView = () => {
+const PatientsView = ({ C = T }) => {
   const [filter, setFilter] = useState('all'); // all | active | upcoming | prior
   const [selected, setSelected] = useState(null);
   const [search, setSearch] = useState('');
@@ -189,7 +189,7 @@ const PatientsView = () => {
   ];
 
   return (
-    <div style={{ padding:24, overflow:'auto', height:'100%', background:T.bg1 }}>
+    <div style={{ padding:24, overflow:'auto', height:'100%', background:C.bg1 }}>
       <ViewHeader
         title="Patient Roster"
         subtitle={`${counts.active} active · ${counts.upcoming} upcoming · ${counts.prior} prior`}
@@ -201,15 +201,15 @@ const PatientsView = () => {
         <div style={{ display:'flex', gap:4 }}>
           {filterTabs.map(t => (
             <button key={t.id} onClick={() => setFilter(t.id)} style={{
-              fontFamily:T.sans, fontSize:11, fontWeight:600,
+              fontFamily:C.sans, fontSize:11, fontWeight:600,
               padding:'6px 14px', borderRadius:20, cursor:'pointer', transition:'all 0.15s',
-              color: filter===t.id ? T.bg : T.w40,
-              background: filter===t.id ? T.teal : T.surface,
-              border: `1px solid ${filter===t.id ? T.teal : T.border}`,
+              color: filter===t.id ? C.bg : C.w40,
+              background: filter===t.id ? C.teal : C.surface,
+              border: `1px solid ${filter===t.id ? C.teal : C.border}`,
             }}>
               {t.label}
-              <span style={{ marginLeft:6, fontFamily:T.mono, fontSize:9,
-                color: filter===t.id ? 'rgba(10,12,11,0.7)' : T.w30 }}>
+              <span style={{ marginLeft:6, fontFamily:C.mono, fontSize:9,
+                color: filter===t.id ? 'rgba(10,12,11,0.7)' : C.w30 }}>
                 {t.count}
               </span>
             </button>
@@ -219,8 +219,8 @@ const PatientsView = () => {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search patients..."
-          style={{ fontFamily:T.sans, fontSize:12, color:T.white, background:T.bg2,
-            border:`1px solid ${T.border2}`, borderRadius:6, padding:'7px 12px',
+          style={{ fontFamily:C.sans, fontSize:12, color:C.white, background:C.bg2,
+            border:`1px solid ${C.border2}`, borderRadius:6, padding:'7px 12px',
             outline:'none', width:200 }}
         />
       </div>
@@ -229,8 +229,8 @@ const PatientsView = () => {
       <div style={{ display:'grid', gridTemplateColumns:'32px 1fr 120px 110px 80px 80px 90px',
         gap:12, padding:'7px 14px', marginBottom:2 }}>
         {['', 'Patient', 'Compound', 'Next Session', 'Sessions', 'Portal', 'Status'].map((h,i) => (
-          <div key={i} style={{ fontFamily:T.sans, fontSize:9, fontWeight:700,
-            letterSpacing:'0.08em', textTransform:'uppercase', color:T.w20 }}>{h}</div>
+          <div key={i} style={{ fontFamily:C.sans, fontSize:9, fontWeight:700,
+            letterSpacing:'0.08em', textTransform:'uppercase', color:C.w20 }}>{h}</div>
         ))}
       </div>
 
@@ -246,29 +246,29 @@ const PatientsView = () => {
               borderRadius: isOpen ? '8px 8px 0 0' : 8,
               marginBottom: isOpen ? 0 : 4,
               cursor:'pointer',
-              background: isOpen ? T.tealGlow : T.surface,
-              border:`1px solid ${isOpen ? 'rgba(45,212,176,0.2)' : T.border}`,
+              background: isOpen ? C.tealGlow : C.surface,
+              border:`1px solid ${isOpen ? 'rgba(45,212,176,0.2)' : C.border}`,
               transition:'all 0.15s', alignItems:'center',
             }}>
-              <div style={{ width:28, height:28, borderRadius:'50%', background:T.tealDark,
+              <div style={{ width:28, height:28, borderRadius:'50%', background:C.tealDark,
                 display:'flex', alignItems:'center', justifyContent:'center',
-                fontFamily:T.sans, fontSize:9, fontWeight:700, color:T.teal }}>
+                fontFamily:C.sans, fontSize:9, fontWeight:700, color:C.teal }}>
                 {p.initials}
               </div>
               <div>
-                <div style={{ fontFamily:T.sans, fontSize:12, fontWeight:600, color:T.w70 }}>{p.name}</div>
-                <div style={{ fontFamily:T.sans, fontSize:10, color:T.w30, marginTop:1 }}>{p.diagnosis}</div>
+                <div style={{ fontFamily:C.sans, fontSize:12, fontWeight:600, color:C.w70 }}>{p.name}</div>
+                <div style={{ fontFamily:C.sans, fontSize:10, color:C.w30, marginTop:1 }}>{p.diagnosis}</div>
               </div>
               <div><Badge color={compoundColor(p.compound)}>{p.compound}</Badge></div>
-              <div style={{ fontFamily:T.sans, fontSize:11, color:p.nextDate==='—'?T.w20:T.w50 }}>
+              <div style={{ fontFamily:C.sans, fontSize:11, color:p.nextDate==='—'?C.w20:C.w50 }}>
                 {p.nextDate}
               </div>
-              <div style={{ fontFamily:T.mono, fontSize:12, color:T.w50 }}>{p.sessions}</div>
+              <div style={{ fontFamily:C.mono, fontSize:12, color:C.w50 }}>{p.sessions}</div>
               <div>
-                {p.portal ? <Badge color={T.teal}>Active</Badge> : <Badge color={T.w30}>Inactive</Badge>}
+                {p.portal ? <Badge color={C.teal}>Active</Badge> : <Badge color={C.w30}>Inactive</Badge>}
               </div>
               <div>
-                <Badge color={p.status==='active'?T.teal:p.status==='upcoming'?T.gold:T.w30}>
+                <Badge color={p.status==='active'?C.teal:p.status==='upcoming'?C.gold:C.w30}>
                   {p.status}
                 </Badge>
               </div>
@@ -285,8 +285,8 @@ const PatientsView = () => {
                 display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:16,
               }}>
                 <div>
-                  <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
-                    textTransform:'uppercase', color:T.teal, marginBottom:8 }}>Patient Info</div>
+                  <div style={{ fontFamily:C.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
+                    textTransform:'uppercase', color:C.teal, marginBottom:8 }}>Patient Info</div>
                   {[
                     ['Protocol',  p.protocol],
                     ['Clinician', p.clinician],
@@ -294,41 +294,41 @@ const PatientsView = () => {
                     ['Sessions',  `${p.sessions} total`],
                   ].map(([k,v]) => (
                     <div key={k} style={{ display:'flex', justifyContent:'space-between',
-                      padding:'5px 0', borderBottom:`1px solid ${T.border}` }}>
-                      <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>{k}</span>
-                      <span style={{ fontFamily:T.sans, fontSize:11, color:T.w70 }}>{v}</span>
+                      padding:'5px 0', borderBottom:`1px solid ${C.border}` }}>
+                      <span style={{ fontFamily:C.sans, fontSize:11, color:C.w30 }}>{k}</span>
+                      <span style={{ fontFamily:C.sans, fontSize:11, color:C.w70 }}>{v}</span>
                     </div>
                   ))}
                 </div>
                 <div>
-                  <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
-                    textTransform:'uppercase', color:T.teal, marginBottom:8 }}>Schedule</div>
+                  <div style={{ fontFamily:C.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
+                    textTransform:'uppercase', color:C.teal, marginBottom:8 }}>Schedule</div>
                   {[
                     ['Next session',  p.nextDate],
                     ['Last session',  p.lastDate],
                     ['Portal access', p.portal ? 'Active' : 'Not invited'],
                   ].map(([k,v]) => (
                     <div key={k} style={{ display:'flex', justifyContent:'space-between',
-                      padding:'5px 0', borderBottom:`1px solid ${T.border}` }}>
-                      <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>{k}</span>
-                      <span style={{ fontFamily:T.sans, fontSize:11, color:T.w70 }}>{v}</span>
+                      padding:'5px 0', borderBottom:`1px solid ${C.border}` }}>
+                      <span style={{ fontFamily:C.sans, fontSize:11, color:C.w30 }}>{k}</span>
+                      <span style={{ fontFamily:C.sans, fontSize:11, color:C.w70 }}>{v}</span>
                     </div>
                   ))}
                 </div>
                 <div style={{ display:'flex', flexDirection:'column', gap:8, justifyContent:'flex-end' }}>
                   {!p.portal && (
-                    <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.bg,
-                      background:T.teal, border:'none', padding:'8px 0', borderRadius:6, cursor:'pointer' }}>
+                    <button style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.bg,
+                      background:C.teal, border:'none', padding:'8px 0', borderRadius:6, cursor:'pointer' }}>
                       Invite to Portal
                     </button>
                   )}
-                  <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70,
-                    background:T.surface2, border:`1px solid ${T.border2}`, padding:'8px 0',
+                  <button style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.w70,
+                    background:C.surface2, border:`1px solid ${C.border2}`, padding:'8px 0',
                     borderRadius:6, cursor:'pointer' }}>
                     Schedule Session
                   </button>
-                  <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70,
-                    background:T.surface2, border:`1px solid ${T.border2}`, padding:'8px 0',
+                  <button style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.w70,
+                    background:C.surface2, border:`1px solid ${C.border2}`, padding:'8px 0',
                     borderRadius:6, cursor:'pointer' }}>
                     View Session History
                   </button>
@@ -340,7 +340,7 @@ const PatientsView = () => {
       })}
 
       {filtered.length === 0 && (
-        <div style={{ textAlign:'center', padding:40, color:T.w30, fontFamily:T.sans, fontSize:13 }}>
+        <div style={{ textAlign:'center', padding:40, color:C.w30, fontFamily:C.sans, fontSize:13 }}>
           No patients match that filter.
         </div>
       )}
@@ -351,7 +351,7 @@ const PatientsView = () => {
 /* ══════════════════════════════════════════
    SESSIONS VIEW
 ══════════════════════════════════════════ */
-const SessionsView = () => {
+const SessionsView = ({ C = T }) => {
   const [filter, setFilter] = useState('all');
   const [selected, setSelected] = useState(null);
   const elapsed = useTimer('01:14:33', true);
@@ -376,7 +376,7 @@ const SessionsView = () => {
     { id:'past',     label:'Past',     count:counts.past },
   ];
 
-  const statusColor = s => s==='live'?T.teal : s==='scheduled'?T.gold : T.w30;
+  const statusColor = s => s==='live'?C.teal : s==='scheduled'?C.gold : C.w30;
   const statusLabel = s => s==='live'?'LIVE' : s==='scheduled'?'UPCOMING' : 'COMPLETE';
 
   // Group by date for display
@@ -388,7 +388,7 @@ const SessionsView = () => {
   }, {});
 
   return (
-    <div style={{ padding:24, overflow:'auto', height:'100%', background:T.bg1 }}>
+    <div style={{ padding:24, overflow:'auto', height:'100%', background:C.bg1 }}>
       <ViewHeader
         title="All Sessions"
         subtitle={`${counts.live} live · ${counts.upcoming} upcoming · ${counts.past} past`}
@@ -399,20 +399,20 @@ const SessionsView = () => {
       <div style={{ display:'flex', gap:4, marginBottom:20 }}>
         {filterTabs.map(t => (
           <button key={t.id} onClick={() => { setFilter(t.id); setSelected(null); }} style={{
-            fontFamily:T.sans, fontSize:11, fontWeight:600,
+            fontFamily:C.sans, fontSize:11, fontWeight:600,
             padding:'6px 14px', borderRadius:20, cursor:'pointer', transition:'all 0.15s',
-            color: filter===t.id ? T.bg : T.w40,
-            background: filter===t.id ? (t.id==='live' ? T.teal : T.teal) : T.surface,
-            border: `1px solid ${filter===t.id ? T.teal : T.border}`,
+            color: filter===t.id ? C.bg : C.w40,
+            background: filter===t.id ? (t.id==='live' ? C.teal : C.teal) : C.surface,
+            border: `1px solid ${filter===t.id ? C.teal : C.border}`,
           }}>
             {t.id === 'live' && t.count > 0 && (
               <span style={{ display:'inline-block', width:6, height:6, borderRadius:'50%',
-                background: filter===t.id ? T.bg : T.teal,
+                background: filter===t.id ? C.bg : C.teal,
                 marginRight:6, animation:'psyPulse 1.5s infinite' }} />
             )}
             {t.label}
-            <span style={{ marginLeft:6, fontFamily:T.mono, fontSize:9,
-              color: filter===t.id ? 'rgba(10,12,11,0.7)' : T.w30 }}>
+            <span style={{ marginLeft:6, fontFamily:C.mono, fontSize:9,
+              color: filter===t.id ? 'rgba(10,12,11,0.7)' : C.w30 }}>
               {t.count}
             </span>
           </button>
@@ -424,12 +424,12 @@ const SessionsView = () => {
         <div key={date} style={{ marginBottom:20 }}>
           {/* Date label */}
           <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
-            <span style={{ fontFamily:T.sans, fontSize:10, fontWeight:700,
-              letterSpacing:'0.1em', textTransform:'uppercase', color:T.w30 }}>
+            <span style={{ fontFamily:C.sans, fontSize:10, fontWeight:700,
+              letterSpacing:'0.1em', textTransform:'uppercase', color:C.w30 }}>
               {date}
             </span>
-            <div style={{ flex:1, height:1, background:T.border }} />
-            <span style={{ fontFamily:T.mono, fontSize:10, color:T.w20 }}>
+            <div style={{ flex:1, height:1, background:C.border }} />
+            <span style={{ fontFamily:C.mono, fontSize:10, color:C.w20 }}>
               {sessions.length} session{sessions.length!==1?'s':''}
             </span>
           </div>
@@ -439,8 +439,8 @@ const SessionsView = () => {
             gridTemplateColumns:'20px 36px 1fr 110px 90px 80px 100px',
             gap:12, padding:'5px 12px', marginBottom:2 }}>
             {['','','Patient','Protocol','Room','Duration','Status'].map((h,i)=>(
-              <div key={i} style={{ fontFamily:T.sans, fontSize:9, fontWeight:700,
-                letterSpacing:'0.08em', textTransform:'uppercase', color:T.w20 }}>{h}</div>
+              <div key={i} style={{ fontFamily:C.sans, fontSize:9, fontWeight:700,
+                letterSpacing:'0.08em', textTransform:'uppercase', color:C.w20 }}>{h}</div>
             ))}
           </div>
 
@@ -456,26 +456,26 @@ const SessionsView = () => {
                   borderRadius: isOpen ? '8px 8px 0 0' : 8,
                   marginBottom: isOpen ? 0 : 3,
                   cursor:'pointer', alignItems:'center', transition:'all 0.15s',
-                  background: isOpen ? T.tealGlow : T.surface,
-                  border:`1px solid ${isOpen ? 'rgba(45,212,176,0.2)' : T.border}`,
+                  background: isOpen ? C.tealGlow : C.surface,
+                  border:`1px solid ${isOpen ? 'rgba(45,212,176,0.2)' : C.border}`,
                 }}>
                   <Dot color={statusColor(s.status)} pulse={s.status==='live'} />
-                  <div style={{ width:30, height:30, borderRadius:'50%', background:T.tealDark,
+                  <div style={{ width:30, height:30, borderRadius:'50%', background:C.tealDark,
                     display:'flex', alignItems:'center', justifyContent:'center',
-                    fontFamily:T.sans, fontSize:9, fontWeight:700, color:T.teal }}>
+                    fontFamily:C.sans, fontSize:9, fontWeight:700, color:C.teal }}>
                     {s.initials}
                   </div>
                   <div>
-                    <div style={{ fontFamily:T.sans, fontSize:12, fontWeight:600, color:T.w70 }}>
+                    <div style={{ fontFamily:C.sans, fontSize:12, fontWeight:600, color:C.w70 }}>
                       {s.patient}
                     </div>
-                    <div style={{ fontFamily:T.sans, fontSize:10, color:T.w30, marginTop:1 }}>
+                    <div style={{ fontFamily:C.sans, fontSize:10, color:C.w30, marginTop:1 }}>
                       {s.time} · {s.soundframe}
                     </div>
                   </div>
                   <div><Badge color={compoundColor(s.compound)}>{s.compound}</Badge></div>
-                  <div style={{ fontFamily:T.sans, fontSize:11, color:T.w50 }}>{s.room}</div>
-                  <div style={{ fontFamily:T.mono, fontSize:11, color:T.w40 }}>
+                  <div style={{ fontFamily:C.sans, fontSize:11, color:C.w50 }}>{s.room}</div>
+                  <div style={{ fontFamily:C.mono, fontSize:11, color:C.w40 }}>
                     {s.status==='live' ? elapsed : s.duration}
                   </div>
                   <div><Badge color={statusColor(s.status)}>{statusLabel(s.status)}</Badge></div>
@@ -492,8 +492,8 @@ const SessionsView = () => {
                     display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:20,
                   }}>
                     <div>
-                      <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
-                        textTransform:'uppercase', color:T.teal, marginBottom:8 }}>Session Detail</div>
+                      <div style={{ fontFamily:C.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
+                        textTransform:'uppercase', color:C.teal, marginBottom:8 }}>Session Detail</div>
                       {[
                         ['Patient',  s.patient],
                         ['Date',     s.date],
@@ -502,15 +502,15 @@ const SessionsView = () => {
                         ['Room',     s.room],
                       ].map(([k,v]) => (
                         <div key={k} style={{ display:'flex', justifyContent:'space-between',
-                          padding:'5px 0', borderBottom:`1px solid ${T.border}` }}>
-                          <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>{k}</span>
-                          <span style={{ fontFamily:T.sans, fontSize:11, color:T.w70 }}>{v}</span>
+                          padding:'5px 0', borderBottom:`1px solid ${C.border}` }}>
+                          <span style={{ fontFamily:C.sans, fontSize:11, color:C.w30 }}>{k}</span>
+                          <span style={{ fontFamily:C.sans, fontSize:11, color:C.w70 }}>{v}</span>
                         </div>
                       ))}
                     </div>
                     <div>
-                      <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
-                        textTransform:'uppercase', color:T.teal, marginBottom:8 }}>Soundframe™</div>
+                      <div style={{ fontFamily:C.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
+                        textTransform:'uppercase', color:C.teal, marginBottom:8 }}>Soundframe™</div>
                       {[
                         ['Protocol',   s.protocol],
                         ['Soundframe', s.soundframe],
@@ -518,32 +518,32 @@ const SessionsView = () => {
                         ['Clinician',  s.clinician],
                       ].map(([k,v]) => (
                         <div key={k} style={{ display:'flex', justifyContent:'space-between',
-                          padding:'5px 0', borderBottom:`1px solid ${T.border}` }}>
-                          <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>{k}</span>
-                          <span style={{ fontFamily:T.sans, fontSize:11, color:T.w70 }}>{v}</span>
+                          padding:'5px 0', borderBottom:`1px solid ${C.border}` }}>
+                          <span style={{ fontFamily:C.sans, fontSize:11, color:C.w30 }}>{k}</span>
+                          <span style={{ fontFamily:C.sans, fontSize:11, color:C.w70 }}>{v}</span>
                         </div>
                       ))}
                     </div>
                     <div style={{ display:'flex', flexDirection:'column', gap:8, justifyContent:'flex-end' }}>
                       {s.status === 'live' && (
-                        <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.bg,
-                          background:T.teal, border:'none', padding:'8px 0', borderRadius:6, cursor:'pointer' }}>
+                        <button style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.bg,
+                          background:C.teal, border:'none', padding:'8px 0', borderRadius:6, cursor:'pointer' }}>
                           ▶ Open Live Session
                         </button>
                       )}
                       {s.status === 'scheduled' && (
-                        <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.bg,
-                          background:T.teal, border:'none', padding:'8px 0', borderRadius:6, cursor:'pointer' }}>
+                        <button style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.bg,
+                          background:C.teal, border:'none', padding:'8px 0', borderRadius:6, cursor:'pointer' }}>
                           Launch Session
                         </button>
                       )}
-                      <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70,
-                        background:T.surface2, border:`1px solid ${T.border2}`, padding:'8px 0',
+                      <button style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.w70,
+                        background:C.surface2, border:`1px solid ${C.border2}`, padding:'8px 0',
                         borderRadius:6, cursor:'pointer' }}>
                         {s.status==='complete' ? 'View Session Notes' : 'Edit Session'}
                       </button>
-                      <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70,
-                        background:T.surface2, border:`1px solid ${T.border2}`, padding:'8px 0',
+                      <button style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.w70,
+                        background:C.surface2, border:`1px solid ${C.border2}`, padding:'8px 0',
                         borderRadius:6, cursor:'pointer' }}>
                         View Patient Profile
                       </button>
@@ -557,7 +557,7 @@ const SessionsView = () => {
       ))}
 
       {filtered.length === 0 && (
-        <div style={{ textAlign:'center', padding:40, color:T.w30, fontFamily:T.sans, fontSize:13 }}>
+        <div style={{ textAlign:'center', padding:40, color:C.w30, fontFamily:C.sans, fontSize:13 }}>
           No sessions in this category.
         </div>
       )}
@@ -568,20 +568,20 @@ const SessionsView = () => {
 /* ══════════════════════════════════════════
    DASHBOARD VIEW (original)
 ══════════════════════════════════════════ */
-const DashboardView = ({ elapsed }) => {
+const DashboardView = ({ elapsed, C = T }) => {
   const [selectedProtocol, setSelectedProtocol] = useState(PROTOCOLS[0]);
   const [selectedPatient, setSelectedPatient]   = useState(ALL_PATIENTS[0]);
   const [playing, setPlaying] = useState(true);
   const PATIENTS = ALL_PATIENTS.slice(0,5);
 
   return (
-    <div style={{ padding:24, overflow:'auto', background:T.bg1, height:'100%' }}>
+    <div style={{ padding:24, overflow:'auto', background:C.bg1, height:'100%' }}>
       <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:20 }}>
         <div>
-          <div style={{ fontFamily:T.sans, fontSize:16, fontWeight:700, color:T.white }}>Today's Sessions</div>
-          <div style={{ fontFamily:T.sans, fontSize:11, color:T.w40, marginTop:2 }}>Friday, June 6 · 3 scheduled · 1 active</div>
+          <div style={{ fontFamily:C.sans, fontSize:16, fontWeight:700, color:C.white }}>Today's Sessions</div>
+          <div style={{ fontFamily:C.sans, fontSize:11, color:C.w40, marginTop:2 }}>Friday, June 6 · 3 scheduled · 1 active</div>
         </div>
-        <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.bg, background:T.teal,
+        <button style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.bg, background:C.teal,
           border:'none', padding:'7px 14px', borderRadius:5, cursor:'pointer', display:'flex', alignItems:'center', gap:6 }}>
           + New Session
         </button>
@@ -590,16 +590,16 @@ const DashboardView = ({ elapsed }) => {
       {/* Stats */}
       <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:10, marginBottom:18 }}>
         {[
-          { label:'Active now',   val:'1',  delta:'Ketamine protocol', dc:T.teal },
-          { label:'This month',   val:'38', delta:'sessions',          dc:T.w30  },
-          { label:'Patients',     val:'14', delta:'active roster',     dc:T.w30  },
-          { label:'Portal access',val:'11', delta:'patients active',   dc:T.w30  },
+          { label:'Active now',   val:'1',  delta:'Ketamine protocol', dc:C.teal },
+          { label:'This month',   val:'38', delta:'sessions',          dc:C.w30  },
+          { label:'Patients',     val:'14', delta:'active roster',     dc:C.w30  },
+          { label:'Portal access',val:'11', delta:'patients active',   dc:C.w30  },
         ].map((s,i) => (
-          <div key={i} style={{ background:T.surface, border:`1px solid ${T.border}`, borderRadius:8, padding:'12px 14px' }}>
-            <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:600, letterSpacing:'0.06em',
-              textTransform:'uppercase', color:T.w30, marginBottom:6 }}>{s.label}</div>
-            <MonoVal color={i===0?T.teal:T.white}>{s.val}</MonoVal>
-            <div style={{ fontFamily:T.sans, fontSize:10, color:s.dc, marginTop:4 }}>{s.delta}</div>
+          <div key={i} style={{ background:C.surface, border:`1px solid ${C.border}`, borderRadius:8, padding:'12px 14px' }}>
+            <div style={{ fontFamily:C.sans, fontSize:10, fontWeight:600, letterSpacing:'0.06em',
+              textTransform:'uppercase', color:C.w30, marginBottom:6 }}>{s.label}</div>
+            <MonoVal color={i===0?C.teal:C.white}>{s.val}</MonoVal>
+            <div style={{ fontFamily:C.sans, fontSize:10, color:s.dc, marginTop:4 }}>{s.delta}</div>
           </div>
         ))}
       </div>
@@ -607,28 +607,28 @@ const DashboardView = ({ elapsed }) => {
       {/* Two columns */}
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
         {/* Session queue */}
-        <div style={{ background:T.surface, border:`1px solid ${T.border}`, borderRadius:8, overflow:'hidden' }}>
-          <div style={{ padding:'10px 14px', borderBottom:`1px solid ${T.border}`,
+        <div style={{ background:C.surface, border:`1px solid ${C.border}`, borderRadius:8, overflow:'hidden' }}>
+          <div style={{ padding:'10px 14px', borderBottom:`1px solid ${C.border}`,
             display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-            <span style={{ fontFamily:T.sans, fontSize:11, fontWeight:700, color:T.w70, letterSpacing:'0.04em' }}>Session Queue</span>
-            <span style={{ fontFamily:T.sans, fontSize:10, color:T.teal, cursor:'pointer' }}>View all →</span>
+            <span style={{ fontFamily:C.sans, fontSize:11, fontWeight:700, color:C.w70, letterSpacing:'0.04em' }}>Session Queue</span>
+            <span style={{ fontFamily:C.sans, fontSize:10, color:C.teal, cursor:'pointer' }}>View all →</span>
           </div>
           {PATIENTS.map((p,i) => (
             <div key={p.id} onClick={() => setSelectedPatient(p)} style={{
               display:'grid', gridTemplateColumns:'20px 1fr auto',
               alignItems:'center', gap:10, padding:'9px 14px',
-              borderBottom:`1px solid ${T.border}`, cursor:'pointer',
-              background: selectedPatient.id===p.id ? T.tealGlow : 'transparent',
+              borderBottom:`1px solid ${C.border}`, cursor:'pointer',
+              background: selectedPatient.id===p.id ? C.tealGlow : 'transparent',
               transition:'background 0.15s',
             }}>
-              <Dot color={p.status==='live'?T.teal:p.status==='scheduled'?T.gold:T.w20} pulse={p.status==='live'} />
+              <Dot color={p.status==='live'?C.teal:p.status==='scheduled'?C.gold:C.w20} pulse={p.status==='live'} />
               <div>
-                <div style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70 }}>{p.name} — {p.room||'—'}</div>
-                <div style={{ fontFamily:T.mono, fontSize:9, color:T.w30, marginTop:1 }}>
+                <div style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.w70 }}>{p.name} — {p.room||'—'}</div>
+                <div style={{ fontFamily:C.mono, fontSize:9, color:C.w30, marginTop:1 }}>
                   {p.protocol}{p.status==='live'?` · ${elapsed} elapsed`:p.time?` · ${p.time}`:''}
                 </div>
               </div>
-              <Badge color={p.status==='live'?T.teal:p.status==='scheduled'?T.gold:T.w30}>
+              <Badge color={p.status==='live'?C.teal:p.status==='scheduled'?C.gold:C.w30}>
                 {p.status==='live'?'LIVE':p.status==='scheduled'?'SCHED':'DONE'}
               </Badge>
             </div>
@@ -636,12 +636,12 @@ const DashboardView = ({ elapsed }) => {
         </div>
 
         {/* Protocol selector */}
-        <div style={{ background:T.surface, border:`1px solid ${T.border}`, borderRadius:8,
+        <div style={{ background:C.surface, border:`1px solid ${C.border}`, borderRadius:8,
           overflow:'hidden', display:'flex', flexDirection:'column' }}>
-          <div style={{ padding:'10px 14px', borderBottom:`1px solid ${T.border}`,
+          <div style={{ padding:'10px 14px', borderBottom:`1px solid ${C.border}`,
             display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-            <span style={{ fontFamily:T.sans, fontSize:11, fontWeight:700, color:T.w70, letterSpacing:'0.04em' }}>Soundframe™ Protocol</span>
-            <span style={{ fontFamily:T.sans, fontSize:10, color:T.teal, cursor:'pointer' }}>Full library →</span>
+            <span style={{ fontFamily:C.sans, fontSize:11, fontWeight:700, color:C.w70, letterSpacing:'0.04em' }}>Soundframe™ Protocol</span>
+            <span style={{ fontFamily:C.sans, fontSize:10, color:C.teal, cursor:'pointer' }}>Full library →</span>
           </div>
           <div style={{ padding:8 }}>
             {PROTOCOLS.map((p,i) => (
@@ -655,17 +655,17 @@ const DashboardView = ({ elapsed }) => {
                 <div style={{ width:28, height:28, borderRadius:6, display:'flex', alignItems:'center',
                   justifyContent:'center', fontSize:14, flexShrink:0, background:`${p.color}18` }}>{p.icon}</div>
                 <div style={{ flex:1 }}>
-                  <div style={{ fontFamily:T.sans, fontSize:11, fontWeight:700, color:T.w70 }}>{p.name}</div>
-                  <div style={{ fontFamily:T.sans, fontSize:9, color:T.w30, marginTop:1 }}>{p.phases} phases · {p.duration}</div>
+                  <div style={{ fontFamily:C.sans, fontSize:11, fontWeight:700, color:C.w70 }}>{p.name}</div>
+                  <div style={{ fontFamily:C.sans, fontSize:9, color:C.w30, marginTop:1 }}>{p.phases} phases · {p.duration}</div>
                 </div>
-                <span style={{ fontFamily:T.mono, fontSize:10, color:T.w30 }}>{p.duration}</span>
+                <span style={{ fontFamily:C.mono, fontSize:10, color:C.w30 }}>{p.duration}</span>
               </div>
             ))}
           </div>
-          <div style={{ marginTop:'auto', padding:'10px 14px', borderTop:`1px solid ${T.border}`,
+          <div style={{ marginTop:'auto', padding:'10px 14px', borderTop:`1px solid ${C.border}`,
             display:'flex', alignItems:'center', gap:10 }}>
             <button onClick={() => setPlaying(v=>!v)} style={{ width:28, height:28, borderRadius:'50%',
-              background:T.teal, border:'none', display:'flex', alignItems:'center',
+              background:C.teal, border:'none', display:'flex', alignItems:'center',
               justifyContent:'center', cursor:'pointer', flexShrink:0 }}>
               {playing
                 ? <svg width="10" height="10"><rect x="0" y="0" width="3.5" height="10" rx="1" fill="#0a0c0b"/><rect x="6.5" y="0" width="3.5" height="10" rx="1" fill="#0a0c0b"/></svg>
@@ -675,35 +675,35 @@ const DashboardView = ({ elapsed }) => {
             <div style={{ flex:1 }}>
               <Waveform color={selectedProtocol.color} count={44} playing={playing} height={24} />
             </div>
-            <span style={{ fontFamily:T.mono, fontSize:10, color:T.w30, flexShrink:0 }}>{elapsed}</span>
+            <span style={{ fontFamily:C.mono, fontSize:10, color:C.w30, flexShrink:0 }}>{elapsed}</span>
           </div>
         </div>
       </div>
 
       {/* Selected patient detail */}
-      <div style={{ marginTop:10, background:T.bg2, border:`1px solid ${T.border2}`, borderRadius:8,
+      <div style={{ marginTop:10, background:C.bg2, border:`1px solid ${C.border2}`, borderRadius:8,
         padding:'12px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:16 }}>
         <div style={{ display:'flex', alignItems:'center', gap:12 }}>
-          <div style={{ width:36, height:36, borderRadius:'50%', background:T.tealDark,
+          <div style={{ width:36, height:36, borderRadius:'50%', background:C.tealDark,
             display:'flex', alignItems:'center', justifyContent:'center',
-            fontFamily:T.sans, fontSize:12, fontWeight:700, color:T.teal, flexShrink:0 }}>
+            fontFamily:C.sans, fontSize:12, fontWeight:700, color:C.teal, flexShrink:0 }}>
             {selectedPatient.initials}
           </div>
           <div>
-            <div style={{ fontFamily:T.sans, fontSize:12, fontWeight:700, color:T.w70 }}>{selectedPatient.name}</div>
-            <div style={{ fontFamily:T.mono, fontSize:10, color:T.w30, marginTop:2 }}>
+            <div style={{ fontFamily:C.sans, fontSize:12, fontWeight:700, color:C.w70 }}>{selectedPatient.name}</div>
+            <div style={{ fontFamily:C.mono, fontSize:10, color:C.w30, marginTop:2 }}>
               {selectedPatient.protocol} · {selectedPatient.sessions} sessions total
             </div>
           </div>
         </div>
         <div style={{ display:'flex', gap:8, alignItems:'center' }}>
-          <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>Portal access:</span>
-          <Badge color={selectedPatient.portal ? T.teal : T.w30}>
+          <span style={{ fontFamily:C.sans, fontSize:11, color:C.w30 }}>Portal access:</span>
+          <Badge color={selectedPatient.portal ? C.teal : C.w30}>
             {selectedPatient.portal ? 'Active' : 'Inactive'}
           </Badge>
           {!selectedPatient.portal && (
-            <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.bg,
-              background:T.teal, border:'none', padding:'5px 12px', borderRadius:5, cursor:'pointer' }}>
+            <button style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.bg,
+              background:C.teal, border:'none', padding:'5px 12px', borderRadius:5, cursor:'pointer' }}>
               Invite to Portal
             </button>
           )}
@@ -719,7 +719,7 @@ const DashboardView = ({ elapsed }) => {
 const LIBRARY = [
   // ── KETAMINE ──
   {
-    id:'k-90', compound:'Ketamine', color:T.teal, icon:'🌊',
+    id:'k-90', compound:'Ketamine', color:C.teal, icon:'🌊',
     name:'Dissociative Grounding Arc', code:'KETAMINE-90',
     duration:'90 min', phases:2, format:'Continuous',
     desc:'Sub-bass anchoring and smooth textural movement engineered to maintain body awareness through the dissociative state. No percussive content. No melodic resolution.',
@@ -727,7 +727,7 @@ const LIBRARY = [
     usedIn:'Clinical sessions', addedDate:'Jan 2024', plays:247,
   },
   {
-    id:'k-60', compound:'Ketamine', color:T.teal, icon:'🌊',
+    id:'k-60', compound:'Ketamine', color:C.teal, icon:'🌊',
     name:'Short Induction Arc', code:'KETAMINE-60',
     duration:'60 min', phases:2, format:'Continuous',
     desc:'Condensed version of the Dissociative Grounding Arc for shorter ketamine infusion protocols. Same sub-bass structure, tighter timeline.',
@@ -735,7 +735,7 @@ const LIBRARY = [
     usedIn:'Clinical sessions', addedDate:'Feb 2024', plays:183,
   },
   {
-    id:'k-int', compound:'Ketamine', color:T.teal, icon:'◌',
+    id:'k-int', compound:'Ketamine', color:C.teal, icon:'◌',
     name:'Ketamine Integration — Short', code:'KETAMINE-INT-20',
     duration:'20 min', phases:1, format:'Single arc',
     desc:'Post-session grounding soundframe for home integration use. Clinician-assigned via patient portal. Designed for the 24–72 hour window following a ketamine session.',
@@ -743,7 +743,7 @@ const LIBRARY = [
     usedIn:'Patient portal', addedDate:'Mar 2024', plays:412,
   },
   {
-    id:'k-int-ext', compound:'Ketamine', color:T.teal, icon:'◌',
+    id:'k-int-ext', compound:'Ketamine', color:C.teal, icon:'◌',
     name:'Ketamine Integration — Extended', code:'KETAMINE-INT-30',
     duration:'30 min', phases:1, format:'Single arc',
     desc:'Extended home integration soundframe for patients who benefit from a longer grounding session. Same acoustic architecture as the short version, expanded timeline.',
@@ -752,7 +752,7 @@ const LIBRARY = [
   },
   // ── PSILOCYBIN ──
   {
-    id:'p-360', compound:'Psilocybin', color:T.gold, icon:'✦',
+    id:'p-360', compound:'Psilocybin', color:C.gold, icon:'✦',
     name:'Full-Spectrum Journey Arc', code:'PSILOCYBIN-360',
     duration:'360 min', phases:3, format:'Continuous',
     desc:'Three-arc structure: Journey Entry, Deep Processing, Gentle Return. Accommodates the full emotional spectrum without directing any of it. Free of culturally coded instrumentation, lyrics, and harmonic resolution.',
@@ -760,7 +760,7 @@ const LIBRARY = [
     usedIn:'Clinical sessions', addedDate:'Jan 2024', plays:89,
   },
   {
-    id:'p-240', compound:'Psilocybin', color:T.gold, icon:'✦',
+    id:'p-240', compound:'Psilocybin', color:C.gold, icon:'✦',
     name:'Medium Journey Arc', code:'PSILOCYBIN-240',
     duration:'240 min', phases:3, format:'Continuous',
     desc:'4-hour version of the Full-Spectrum Journey Arc for medium-dose psilocybin protocols. Maintains the three-arc structure with compressed phase durations.',
@@ -768,7 +768,7 @@ const LIBRARY = [
     usedIn:'Clinical sessions', addedDate:'Mar 2024', plays:54,
   },
   {
-    id:'p-int', compound:'Psilocybin', color:T.gold, icon:'◌',
+    id:'p-int', compound:'Psilocybin', color:C.gold, icon:'◌',
     name:'Psilocybin Integration — Gentle Return', code:'PSILO-INT-20',
     duration:'20 min', phases:1, format:'Single arc',
     desc:'Soft, supportive soundframe for integration in the days following a psilocybin session. Based on the Gentle Return phase of the Full-Spectrum Journey Arc.',
@@ -777,7 +777,7 @@ const LIBRARY = [
   },
   // ── MDMA / PTSD ──
   {
-    id:'m-240', compound:'MDMA / PTSD', color:T.red, icon:'◎',
+    id:'m-240', compound:'MDMA / PTSD', color:C.red, icon:'◎',
     name:'Trauma-Informed MAPS Arc', code:'MDMA-PTSD-240',
     duration:'240 min', phases:4, format:'Continuous',
     desc:'Developed in direct response to patient feedback from MAPS FDA clinical trials. Supports dual-focus processing — inward exploration and relational presence — without intruding on either. Veteran-informed. MAPS-tested.',
@@ -785,7 +785,7 @@ const LIBRARY = [
     usedIn:'Clinical sessions', addedDate:'Jan 2024', plays:76,
   },
   {
-    id:'m-int', compound:'MDMA / PTSD', color:T.red, icon:'◌',
+    id:'m-int', compound:'MDMA / PTSD', color:C.red, icon:'◌',
     name:'MDMA Integration Arc', code:'MDMA-INT-25',
     duration:'25 min', phases:1, format:'Single arc',
     desc:'Post-MDMA integration soundframe designed for the processing window in the days following a session. Supportive, non-directive. Particularly suited to veterans working with trauma.',
@@ -794,7 +794,7 @@ const LIBRARY = [
   },
   // ── GENERAL / INTEGRATION ──
   {
-    id:'g-rest', compound:'Integration', color:T.w40, icon:'◌',
+    id:'g-rest', compound:'Integration', color:C.w40, icon:'◌',
     name:'Deep Rest Soundframe', code:'INT-REST-30',
     duration:'30 min', phases:1, format:'Single arc',
     desc:'Sleep-support soundframe for use in the 1–3 nights following any session. Activates the parasympathetic nervous system. Rooted in humpback whale acoustics and U.S. Navy sonar research.',
@@ -805,7 +805,7 @@ const LIBRARY = [
 
 const NEW_RELEASES = [
   {
-    id:'nr-1', compound:'Ketamine', color:T.teal, icon:'🌊',
+    id:'nr-1', compound:'Ketamine', color:C.teal, icon:'🌊',
     name:'Ketamine Extended — 120 min', code:'KETAMINE-120',
     duration:'120 min', phases:3, format:'Continuous',
     isNew:true, releaseDate:'Jun 2025',
@@ -814,7 +814,7 @@ const NEW_RELEASES = [
     badge:'New',
   },
   {
-    id:'nr-2', compound:'Psilocybin', color:T.gold, icon:'✦',
+    id:'nr-2', compound:'Psilocybin', color:C.gold, icon:'✦',
     name:'Micro-Journey Arc — 90 min', code:'PSILO-MICRO-90',
     duration:'90 min', phases:2, format:'Continuous',
     isNew:true, releaseDate:'Jun 2025',
@@ -823,7 +823,7 @@ const NEW_RELEASES = [
     badge:'New',
   },
   {
-    id:'nr-3', compound:'MDMA / PTSD', color:T.red, icon:'◎',
+    id:'nr-3', compound:'MDMA / PTSD', color:C.red, icon:'◎',
     name:'Booster Session Arc — 60 min', code:'MDMA-BOOST-60',
     duration:'60 min', phases:2, format:'Continuous',
     isNew:true, releaseDate:'Jun 2025',
@@ -875,19 +875,19 @@ const MiniWave = ({ color, count=32, playing=false, height=20 }) => {
 
 /* ── Compound color helper ── */
 const cColor = c => {
-  if (!c) return T.w40;
+  if (!c) return C.w40;
   const l = c.toLowerCase();
-  if (l.includes('ketamine'))   return T.teal;
-  if (l.includes('psilocybin')) return T.gold;
-  if (l.includes('mdma'))       return T.red;
+  if (l.includes('ketamine'))   return C.teal;
+  if (l.includes('psilocybin')) return C.gold;
+  if (l.includes('mdma'))       return C.red;
   if (l.includes('breathwork') || l === 'integration') return '#9b7fd4';
-  return T.w40;
+  return C.w40;
 };
 
 /* ══════════════════════════════════════════
    SOUNDFRAME LIBRARY VIEW
 ══════════════════════════════════════════ */
-const SoundframeLibraryView = () => {
+const SoundframeLibraryView = ({ C = T }) => {
   const [filter, setFilter]   = useState('all');
   const [selected, setSelected] = useState(null);
   const [search, setSearch]   = useState('');
@@ -920,17 +920,17 @@ const SoundframeLibraryView = () => {
   const compoundOrder = ['Ketamine','Psilocybin','MDMA / PTSD','Integration'];
 
   return (
-    <div style={{ padding:24, overflow:'auto', height:'100%', background:T.bg1 }}>
+    <div style={{ padding:24, overflow:'auto', height:'100%', background:C.bg1 }}>
       {/* Header */}
       <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:20 }}>
         <div>
-          <div style={{ fontFamily:T.sans, fontSize:16, fontWeight:700, color:T.white }}>Soundframe™ Library</div>
-          <div style={{ fontFamily:T.sans, fontSize:11, color:T.w40, marginTop:2 }}>
+          <div style={{ fontFamily:C.sans, fontSize:16, fontWeight:700, color:C.white }}>Soundframe™ Library</div>
+          <div style={{ fontFamily:C.sans, fontSize:11, color:C.w40, marginTop:2 }}>
             {LIBRARY.length} soundframes across 3 compounds · Updated Jun 2025
           </div>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-          <span style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.gold,
+          <span style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.gold,
             background:'rgba(201,169,110,0.1)', border:'1px solid rgba(201,169,110,0.2)',
             padding:'4px 12px', borderRadius:20 }}>
             ✦ 4 new soundframes available
@@ -943,15 +943,15 @@ const SoundframeLibraryView = () => {
         <div style={{ display:'flex', gap:4, flexWrap:'wrap' }}>
           {compounds.map(c => (
             <button key={c} onClick={() => setFilter(c)} style={{
-              fontFamily:T.sans, fontSize:11, fontWeight:600,
+              fontFamily:C.sans, fontSize:11, fontWeight:600,
               padding:'6px 14px', borderRadius:20, cursor:'pointer', transition:'all 0.15s',
-              color: filter===c ? T.bg : cColor(c==='all'?null:c),
-              background: filter===c ? cColor(c==='all'?null:c) : T.surface,
-              border: `1px solid ${filter===c ? cColor(c==='all'?null:c) : T.border}`,
+              color: filter===c ? C.bg : cColor(c==='all'?null:c),
+              background: filter===c ? cColor(c==='all'?null:c) : C.surface,
+              border: `1px solid ${filter===c ? cColor(c==='all'?null:c) : C.border}`,
             }}>
               {c==='all'?'All Soundframes':c}
-              <span style={{ marginLeft:6, fontFamily:T.mono, fontSize:9,
-                color:filter===c?'rgba(10,12,11,0.6)':T.w30 }}>
+              <span style={{ marginLeft:6, fontFamily:C.mono, fontSize:9,
+                color:filter===c?'rgba(10,12,11,0.6)':C.w30 }}>
                 {counts[c]}
               </span>
             </button>
@@ -960,8 +960,8 @@ const SoundframeLibraryView = () => {
         <input
           value={search} onChange={e=>setSearch(e.target.value)}
           placeholder="Search soundframes..."
-          style={{ fontFamily:T.sans, fontSize:12, color:T.white, background:T.bg2,
-            border:`1px solid ${T.border2}`, borderRadius:6, padding:'7px 12px',
+          style={{ fontFamily:C.sans, fontSize:12, color:C.white, background:C.bg2,
+            border:`1px solid ${C.border2}`, borderRadius:6, padding:'7px 12px',
             outline:'none', width:200 }}
         />
       </div>
@@ -971,10 +971,10 @@ const SoundframeLibraryView = () => {
         <div key={compound} style={{ marginBottom:24 }}>
           {/* Compound header */}
           <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:10 }}>
-            <span style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.1em',
+            <span style={{ fontFamily:C.sans, fontSize:10, fontWeight:700, letterSpacing:'0.1em',
               textTransform:'uppercase', color:cColor(compound) }}>{compound}</span>
-            <div style={{ flex:1, height:1, background:T.border }} />
-            <span style={{ fontFamily:T.mono, fontSize:10, color:T.w20 }}>
+            <div style={{ flex:1, height:1, background:C.border }} />
+            <span style={{ fontFamily:C.mono, fontSize:10, color:C.w20 }}>
               {grouped[compound].length} soundframe{grouped[compound].length!==1?'s':''}
             </span>
           </div>
@@ -987,8 +987,8 @@ const SoundframeLibraryView = () => {
                 gap:12, padding:'12px 14px', borderRadius:selected?.id===sf.id?'8px 8px 0 0':8,
                 marginBottom: selected?.id===sf.id ? 0 : 4,
                 cursor:'pointer', alignItems:'center', transition:'all 0.15s',
-                background: selected?.id===sf.id ? `${sf.color}18` : T.surface,
-                border:`1px solid ${selected?.id===sf.id ? sf.color+'44' : T.border}`,
+                background: selected?.id===sf.id ? `${sf.color}18` : C.surface,
+                border:`1px solid ${selected?.id===sf.id ? sf.color+'44' : C.border}`,
               }}>
                 {/* Icon */}
                 <div style={{ width:32, height:32, borderRadius:7, background:`${sf.color}18`,
@@ -997,22 +997,22 @@ const SoundframeLibraryView = () => {
                 </div>
                 {/* Name + code */}
                 <div>
-                  <div style={{ fontFamily:T.sans, fontSize:12, fontWeight:700,
-                    color: selected?.id===sf.id ? T.white : T.w70 }}>{sf.name}</div>
+                  <div style={{ fontFamily:C.sans, fontSize:12, fontWeight:700,
+                    color: selected?.id===sf.id ? C.white : C.w70 }}>{sf.name}</div>
                   <div style={{ display:'flex', alignItems:'center', gap:8, marginTop:2 }}>
-                    <span style={{ fontFamily:T.mono, fontSize:9, color:sf.color }}>{sf.code}</span>
-                    <span style={{ fontFamily:T.sans, fontSize:9, color:T.w20 }}>·</span>
-                    <span style={{ fontFamily:T.sans, fontSize:9, color:T.w30 }}>{sf.usedIn}</span>
+                    <span style={{ fontFamily:C.mono, fontSize:9, color:sf.color }}>{sf.code}</span>
+                    <span style={{ fontFamily:C.sans, fontSize:9, color:C.w20 }}>·</span>
+                    <span style={{ fontFamily:C.sans, fontSize:9, color:C.w30 }}>{sf.usedIn}</span>
                   </div>
                 </div>
                 {/* Duration */}
-                <div style={{ fontFamily:T.mono, fontSize:11, color:T.w50 }}>{sf.duration}</div>
+                <div style={{ fontFamily:C.mono, fontSize:11, color:C.w50 }}>{sf.duration}</div>
                 {/* Phases */}
-                <div style={{ fontFamily:T.sans, fontSize:11, color:T.w40 }}>{sf.phases} phase{sf.phases!==1?'s':''}</div>
+                <div style={{ fontFamily:C.sans, fontSize:11, color:C.w40 }}>{sf.phases} phase{sf.phases!==1?'s':''}</div>
                 {/* Plays */}
                 <div>
-                  <div style={{ fontFamily:T.mono, fontSize:12, color:T.w50 }}>{sf.plays}</div>
-                  <div style={{ fontFamily:T.sans, fontSize:9, color:T.w20, marginTop:1 }}>plays</div>
+                  <div style={{ fontFamily:C.mono, fontSize:12, color:C.w50 }}>{sf.plays}</div>
+                  <div style={{ fontFamily:C.sans, fontSize:9, color:C.w20, marginTop:1 }}>plays</div>
                 </div>
                 {/* Waveform preview */}
                 <div style={{ opacity:0.7 }}>
@@ -1028,7 +1028,7 @@ const SoundframeLibraryView = () => {
                     transition:'all 0.15s',
                   }}>
                     {playing===sf.id
-                      ? <svg width="9" height="9"><rect x="0" y="0" width="3" height="9" rx="1" fill={T.bg}/><rect x="6" y="0" width="3" height="9" rx="1" fill={T.bg}/></svg>
+                      ? <svg width="9" height="9"><rect x="0" y="0" width="3" height="9" rx="1" fill={C.bg}/><rect x="6" y="0" width="3" height="9" rx="1" fill={C.bg}/></svg>
                       : <svg width="8" height="9" style={{marginLeft:1}}><polygon points="0,0 8,4.5 0,9" fill={sf.color}/></svg>
                     }
                   </button>
@@ -1041,12 +1041,12 @@ const SoundframeLibraryView = () => {
                   borderTop:'none', borderRadius:'0 0 8px 8px', padding:16, marginBottom:4 }}>
                   <div style={{ display:'grid', gridTemplateColumns:'1fr auto', gap:20, alignItems:'start' }}>
                     <div>
-                      <p style={{ fontFamily:T.sans, fontSize:12, color:T.w50, lineHeight:1.65, marginBottom:12 }}>
+                      <p style={{ fontFamily:C.sans, fontSize:12, color:C.w50, lineHeight:1.65, marginBottom:12 }}>
                         {sf.desc}
                       </p>
                       <div style={{ display:'flex', gap:6, flexWrap:'wrap' }}>
                         {sf.tags.map(tag => (
-                          <span key={tag} style={{ fontFamily:T.sans, fontSize:10, fontWeight:600,
+                          <span key={tag} style={{ fontFamily:C.sans, fontSize:10, fontWeight:600,
                             color:sf.color, background:`${sf.color}15`,
                             border:`1px solid ${sf.color}30`, padding:'3px 9px', borderRadius:20 }}>
                             {tag}
@@ -1055,17 +1055,17 @@ const SoundframeLibraryView = () => {
                       </div>
                     </div>
                     <div style={{ display:'flex', flexDirection:'column', gap:6, minWidth:140 }}>
-                      <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600,
-                        color:T.bg, background:sf.color, border:'none',
+                      <button style={{ fontFamily:C.sans, fontSize:11, fontWeight:600,
+                        color:C.bg, background:sf.color, border:'none',
                         padding:'8px 14px', borderRadius:6, cursor:'pointer', whiteSpace:'nowrap' }}>
                         Assign to Session
                       </button>
-                      <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70,
-                        background:T.surface2, border:`1px solid ${T.border2}`,
+                      <button style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.w70,
+                        background:C.surface2, border:`1px solid ${C.border2}`,
                         padding:'8px 14px', borderRadius:6, cursor:'pointer' }}>
                         Send to Portal
                       </button>
-                      <div style={{ fontFamily:T.sans, fontSize:10, color:T.w20, textAlign:'center',
+                      <div style={{ fontFamily:C.sans, fontSize:10, color:C.w20, textAlign:'center',
                         paddingTop:4 }}>Added {sf.addedDate}</div>
                     </div>
                   </div>
@@ -1077,11 +1077,11 @@ const SoundframeLibraryView = () => {
                         width:24, height:24, borderRadius:'50%', background:sf.color,
                         border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
                         {playing===sf.id
-                          ? <svg width="8" height="8"><rect x="0" y="0" width="2.5" height="8" rx="0.5" fill={T.bg}/><rect x="5.5" y="0" width="2.5" height="8" rx="0.5" fill={T.bg}/></svg>
-                          : <svg width="7" height="8" style={{marginLeft:1}}><polygon points="0,0 7,4 0,8" fill={T.bg}/></svg>}
+                          ? <svg width="8" height="8"><rect x="0" y="0" width="2.5" height="8" rx="0.5" fill={C.bg}/><rect x="5.5" y="0" width="2.5" height="8" rx="0.5" fill={C.bg}/></svg>
+                          : <svg width="7" height="8" style={{marginLeft:1}}><polygon points="0,0 7,4 0,8" fill={C.bg}/></svg>}
                       </button>
                       <MiniWave color={sf.color} count={48} playing={playing===sf.id} height={22} />
-                      <span style={{ fontFamily:T.mono, fontSize:10, color:T.w30, flexShrink:0 }}>
+                      <span style={{ fontFamily:C.mono, fontSize:10, color:C.w30, flexShrink:0 }}>
                         {sf.duration}
                       </span>
                     </div>
@@ -1094,7 +1094,7 @@ const SoundframeLibraryView = () => {
       ))}
 
       {filtered.length===0 && (
-        <div style={{ textAlign:'center', padding:40, color:T.w30, fontFamily:T.sans, fontSize:13 }}>
+        <div style={{ textAlign:'center', padding:40, color:C.w30, fontFamily:C.sans, fontSize:13 }}>
           No soundframes match that search.
         </div>
       )}
@@ -1105,22 +1105,22 @@ const SoundframeLibraryView = () => {
 /* ══════════════════════════════════════════
    NEW RELEASE VIEW
 ══════════════════════════════════════════ */
-const NewReleaseView = () => {
+const NewReleaseView = ({ C = T }) => {
   const [selected, setSelected] = useState(null);
   const [playing, setPlaying]   = useState(null);
 
   return (
-    <div style={{ padding:24, overflow:'auto', height:'100%', background:T.bg1 }}>
+    <div style={{ padding:24, overflow:'auto', height:'100%', background:C.bg1 }}>
       {/* Header */}
       <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:8 }}>
         <div>
-          <div style={{ fontFamily:T.sans, fontSize:16, fontWeight:700, color:T.white }}>New Releases</div>
-          <div style={{ fontFamily:T.sans, fontSize:11, color:T.w40, marginTop:2 }}>
+          <div style={{ fontFamily:C.sans, fontSize:16, fontWeight:700, color:C.white }}>New Releases</div>
+          <div style={{ fontFamily:C.sans, fontSize:11, color:C.w40, marginTop:2 }}>
             June 2025 · {NEW_RELEASES.length} new soundframes added to your library
           </div>
         </div>
-        <span style={{ fontFamily:T.mono, fontSize:10, fontWeight:500,
-          color:T.gold, background:'rgba(201,169,110,0.1)', border:'1px solid rgba(201,169,110,0.2)',
+        <span style={{ fontFamily:C.mono, fontSize:10, fontWeight:500,
+          color:C.gold, background:'rgba(201,169,110,0.1)', border:'1px solid rgba(201,169,110,0.2)',
           padding:'4px 12px', borderRadius:20 }}>
           Jun 2025 Drop
         </span>
@@ -1128,11 +1128,11 @@ const NewReleaseView = () => {
 
       {/* Intro band */}
       <div style={{ background:`linear-gradient(135deg,rgba(45,212,176,0.07),rgba(201,169,110,0.05))`,
-        border:`1px solid ${T.border2}`, borderRadius:10, padding:'14px 18px', marginBottom:24,
+        border:`1px solid ${C.border2}`, borderRadius:10, padding:'14px 18px', marginBottom:24,
         display:'flex', alignItems:'center', gap:14 }}>
         <div style={{ fontSize:24, flexShrink:0 }}>✦</div>
         <div>
-          <div style={{ fontFamily:T.serif, fontSize:15, fontStyle:'italic', color:T.w70, lineHeight:1.5 }}>
+          <div style={{ fontFamily:C.serif, fontSize:15, fontStyle:'italic', color:C.w70, lineHeight:1.5 }}>
             Each new soundframe is automatically added to your library. Click any card to preview, assign to a session, or send to a patient's portal.
           </div>
         </div>
@@ -1142,8 +1142,8 @@ const NewReleaseView = () => {
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
         {NEW_RELEASES.map(sf => (
           <div key={sf.id} onClick={() => setSelected(selected?.id===sf.id?null:sf)} style={{
-            background: selected?.id===sf.id ? `${sf.color}14` : T.bg2,
-            border:`1px solid ${selected?.id===sf.id ? sf.color+'44' : T.border2}`,
+            background: selected?.id===sf.id ? `${sf.color}14` : C.bg2,
+            border:`1px solid ${selected?.id===sf.id ? sf.color+'44' : C.border2}`,
             borderRadius:12, overflow:'hidden', cursor:'pointer', transition:'all 0.2s',
             transform: selected?.id===sf.id ? 'none' : 'translateY(0)',
           }}
@@ -1159,7 +1159,7 @@ const NewReleaseView = () => {
                     {sf.icon}
                   </div>
                   <div>
-                    <span style={{ fontFamily:T.sans, fontSize:9, fontWeight:700, letterSpacing:'0.1em',
+                    <span style={{ fontFamily:C.sans, fontSize:9, fontWeight:700, letterSpacing:'0.1em',
                       textTransform:'uppercase', color:sf.color, background:`${sf.color}15`,
                       border:`1px solid ${sf.color}30`, padding:'2px 8px', borderRadius:20 }}>
                       {sf.compound}
@@ -1167,9 +1167,9 @@ const NewReleaseView = () => {
                   </div>
                 </div>
                 <div style={{ display:'flex', alignItems:'center', gap:6 }}>
-                  <span style={{ fontFamily:T.sans, fontSize:9, fontWeight:700, letterSpacing:'0.08em',
+                  <span style={{ fontFamily:C.sans, fontSize:9, fontWeight:700, letterSpacing:'0.08em',
                     textTransform:'uppercase',
-                    color: sf.badge==='Beta' ? T.gold : T.bg,
+                    color: sf.badge==='Beta' ? C.gold : C.bg,
                     background: sf.badge==='Beta' ? 'rgba(201,169,110,0.15)' : sf.color,
                     border: sf.badge==='Beta' ? '1px solid rgba(201,169,110,0.3)' : 'none',
                     padding:'3px 9px', borderRadius:20 }}>
@@ -1178,18 +1178,18 @@ const NewReleaseView = () => {
                 </div>
               </div>
 
-              <div style={{ fontFamily:T.serif, fontSize:17, fontStyle:'italic', color:T.white,
+              <div style={{ fontFamily:C.serif, fontSize:17, fontStyle:'italic', color:C.white,
                 lineHeight:1.3, marginBottom:6 }}>{sf.name}</div>
-              <div style={{ fontFamily:T.mono, fontSize:10, color:sf.color, marginBottom:10 }}>{sf.code}</div>
+              <div style={{ fontFamily:C.mono, fontSize:10, color:sf.color, marginBottom:10 }}>{sf.code}</div>
 
-              <p style={{ fontFamily:T.sans, fontSize:12, color:T.w40, lineHeight:1.6, marginBottom:14 }}>
+              <p style={{ fontFamily:C.sans, fontSize:12, color:C.w40, lineHeight:1.6, marginBottom:14 }}>
                 {sf.desc}
               </p>
 
               {/* Tags */}
               <div style={{ display:'flex', gap:5, flexWrap:'wrap', marginBottom:14 }}>
                 {sf.tags.map(tag => (
-                  <span key={tag} style={{ fontFamily:T.sans, fontSize:9, fontWeight:600,
+                  <span key={tag} style={{ fontFamily:C.sans, fontSize:9, fontWeight:600,
                     color:sf.color, background:`${sf.color}12`,
                     border:`1px solid ${sf.color}28`, padding:'2px 8px', borderRadius:20 }}>
                     {tag}
@@ -1205,11 +1205,11 @@ const NewReleaseView = () => {
                   width:26, height:26, borderRadius:'50%', background:sf.color,
                   border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
                   {playing===sf.id
-                    ? <svg width="9" height="9"><rect x="0" y="0" width="3" height="9" rx="1" fill={T.bg}/><rect x="6" y="0" width="3" height="9" rx="1" fill={T.bg}/></svg>
-                    : <svg width="8" height="9" style={{marginLeft:1}}><polygon points="0,0 8,4.5 0,9" fill={T.bg}/></svg>}
+                    ? <svg width="9" height="9"><rect x="0" y="0" width="3" height="9" rx="1" fill={C.bg}/><rect x="6" y="0" width="3" height="9" rx="1" fill={C.bg}/></svg>
+                    : <svg width="8" height="9" style={{marginLeft:1}}><polygon points="0,0 8,4.5 0,9" fill={C.bg}/></svg>}
                 </button>
                 <MiniWave color={sf.color} count={32} playing={playing===sf.id} height={22} />
-                <span style={{ fontFamily:T.mono, fontSize:10, color:T.w30, flexShrink:0 }}>{sf.duration}</span>
+                <span style={{ fontFamily:C.mono, fontSize:10, color:C.w30, flexShrink:0 }}>{sf.duration}</span>
               </div>
             </div>
 
@@ -1220,15 +1220,15 @@ const NewReleaseView = () => {
               <div style={{ display:'flex', gap:16 }}>
                 {[['Duration', sf.duration],['Phases', `${sf.phases}`],['Format', sf.format]].map(([k,v])=>(
                   <div key={k}>
-                    <div style={{ fontFamily:T.sans, fontSize:9, fontWeight:700, letterSpacing:'0.06em',
-                      textTransform:'uppercase', color:T.w20 }}>{k}</div>
-                    <div style={{ fontFamily:T.mono, fontSize:11, color:T.w50, marginTop:2 }}>{v}</div>
+                    <div style={{ fontFamily:C.sans, fontSize:9, fontWeight:700, letterSpacing:'0.06em',
+                      textTransform:'uppercase', color:C.w20 }}>{k}</div>
+                    <div style={{ fontFamily:C.mono, fontSize:11, color:C.w50, marginTop:2 }}>{v}</div>
                   </div>
                 ))}
               </div>
               <div style={{ display:'flex', gap:6 }}>
-                <button onClick={e=>{e.stopPropagation();}} style={{ fontFamily:T.sans, fontSize:10,
-                  fontWeight:600, color:T.bg, background:sf.color,
+                <button onClick={e=>{e.stopPropagation();}} style={{ fontFamily:C.sans, fontSize:10,
+                  fontWeight:600, color:C.bg, background:sf.color,
                   border:'none', padding:'6px 12px', borderRadius:5, cursor:'pointer', whiteSpace:'nowrap' }}>
                   Assign to Session
                 </button>
@@ -1239,13 +1239,13 @@ const NewReleaseView = () => {
       </div>
 
       {/* Bottom note */}
-      <div style={{ marginTop:20, padding:'12px 16px', background:T.bg2,
-        border:`1px solid ${T.border}`, borderRadius:8, display:'flex', gap:10, alignItems:'flex-start' }}>
+      <div style={{ marginTop:20, padding:'12px 16px', background:C.bg2,
+        border:`1px solid ${C.border}`, borderRadius:8, display:'flex', gap:10, alignItems:'flex-start' }}>
         <span style={{ fontSize:14, flexShrink:0 }}>📬</span>
-        <div style={{ fontFamily:T.sans, fontSize:11, color:T.w30, lineHeight:1.6 }}>
+        <div style={{ fontFamily:C.sans, fontSize:11, color:C.w30, lineHeight:1.6 }}>
           New soundframes are added to your library automatically with every release.
           You'll receive a notification in your dashboard when the next drop is available.
-          <span style={{ color:T.teal, cursor:'pointer' }}> Request a compound-specific soundframe →</span>
+          <span style={{ color:C.teal, cursor:'pointer' }}> Request a compound-specific soundframe →</span>
         </div>
       </div>
     </div>
@@ -1255,7 +1255,8 @@ const NewReleaseView = () => {
 /* ══════════════════════════════════════════
    CLINICIAN DASHBOARD — outer shell with nav
 ══════════════════════════════════════════ */
-const ClinicianDashboard = () => {
+const ClinicianDashboard = ({ theme = T }) => {
+  const C = theme;
   const [activeNav, setActiveNav] = useState('dashboard');
   const elapsed = useTimer('01:14:33', true);
 
@@ -1269,55 +1270,55 @@ const ClinicianDashboard = () => {
   ];
 
   return (
-    <div style={{ display:'grid', gridTemplateColumns:'200px 1fr', height:'100%', minHeight:0, overflow:'hidden', background:T.bg1 }}>
+    <div style={{ display:'grid', gridTemplateColumns:'200px 1fr', height:'100%', minHeight:0, overflow:'hidden', background:C.bg1, transition:'background 0.3s' }}>
       {/* Sidebar */}
-      <div style={{ background:T.bg1, borderRight:`1px solid ${T.border}`, display:'flex', flexDirection:'column', overflow:'hidden' }}>
-        <div style={{ padding:'16px', borderBottom:`1px solid ${T.border}`, display:'flex', alignItems:'center', gap:8 }}>
-          <span style={{ width:8, height:8, borderRadius:'50%', background:T.teal,
-            boxShadow:`0 0 6px ${T.teal}`, animation:'psyPulse 2s infinite' }} />
-          <span style={{ fontFamily:T.sans, fontWeight:700, fontSize:13, color:T.white }}>PsySonics</span>
-          <Badge color={T.teal}>v2.1</Badge>
+      <div style={{ background:C.bg1, borderRight:`1px solid ${C.border}`, display:'flex', flexDirection:'column', overflow:'hidden', transition:'background 0.3s' }}>
+        <div style={{ padding:'16px', borderBottom:`1px solid ${C.border}`, display:'flex', alignItems:'center', gap:8 }}>
+          <span style={{ width:8, height:8, borderRadius:'50%', background:C.teal,
+            boxShadow:`0 0 6px ${C.teal}`, animation:'psyPulse 2s infinite' }} />
+          <span style={{ fontFamily:C.sans, fontWeight:700, fontSize:13, color:C.white }}>PsySonics</span>
+          <Badge color={C.teal}>v2.1</Badge>
         </div>
         <div style={{ padding:'12px 10px', flex:1 }}>
-          <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.1em',
-            textTransform:'uppercase', color:T.w20, padding:'0 8px', marginBottom:4 }}>Clinic</div>
+          <div style={{ fontFamily:C.sans, fontSize:10, fontWeight:700, letterSpacing:'0.1em',
+            textTransform:'uppercase', color:C.w20, padding:'0 8px', marginBottom:4 }}>Clinic</div>
           {navItems.slice(0,3).map(n => (
             <div key={n.id} onClick={() => setActiveNav(n.id)} style={{
               display:'flex', alignItems:'center', gap:9, padding:'8px 10px', borderRadius:6,
-              fontFamily:T.sans, fontSize:12, fontWeight:500,
-              color: activeNav===n.id ? T.teal : T.w40,
-              background: activeNav===n.id ? T.tealGlow : 'transparent',
-              border: activeNav===n.id ? `1px solid rgba(45,212,176,0.15)` : '1px solid transparent',
+              fontFamily:C.sans, fontSize:12, fontWeight:500,
+              color: activeNav===n.id ? C.teal : C.w40,
+              background: activeNav===n.id ? C.tealGlow : 'transparent',
+              border: activeNav===n.id ? `1px solid ${C.teal}33` : '1px solid transparent',
               cursor:'pointer', marginBottom:1, transition:'all 0.15s',
             }}>
-              <span style={{ color:activeNav===n.id?T.teal:T.w30, opacity:activeNav===n.id?1:0.7 }}>{n.icon}</span>
+              <span style={{ color:activeNav===n.id?C.teal:C.w30, opacity:activeNav===n.id?1:0.7 }}>{n.icon}</span>
               {n.label}
             </div>
           ))}
-          <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.1em',
-            textTransform:'uppercase', color:T.w20, padding:'12px 8px 4px' }}>Soundframe Library</div>
+          <div style={{ fontFamily:C.sans, fontSize:10, fontWeight:700, letterSpacing:'0.1em',
+            textTransform:'uppercase', color:C.w20, padding:'12px 8px 4px' }}>Soundframe Library</div>
           {navItems.slice(3,5).map(n => (
             <div key={n.id} onClick={() => setActiveNav(n.id)} style={{
               display:'flex', alignItems:'center', gap:9, padding:'8px 10px', borderRadius:6,
-              fontFamily:T.sans, fontSize:12, fontWeight:500,
-              color: activeNav===n.id ? T.teal : T.w40,
-              background: activeNav===n.id ? T.tealGlow : 'transparent',
-              border: activeNav===n.id ? `1px solid rgba(45,212,176,0.15)` : '1px solid transparent',
+              fontFamily:C.sans, fontSize:12, fontWeight:500,
+              color: activeNav===n.id ? C.teal : C.w40,
+              background: activeNav===n.id ? C.tealGlow : 'transparent',
+              border: activeNav===n.id ? `1px solid ${C.teal}33` : '1px solid transparent',
               cursor:'pointer', marginBottom:1, transition:'all 0.15s',
             }}>
               <span style={{ opacity:0.7 }}>{n.icon}</span>
               {n.label}
             </div>
           ))}
-          <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.1em',
-            textTransform:'uppercase', color:T.w20, padding:'12px 8px 4px' }}>Settings</div>
+          <div style={{ fontFamily:C.sans, fontSize:10, fontWeight:700, letterSpacing:'0.1em',
+            textTransform:'uppercase', color:C.w20, padding:'12px 8px 4px' }}>Settings</div>
           {navItems.slice(5).map(n => (
             <div key={n.id} onClick={() => setActiveNav(n.id)} style={{
               display:'flex', alignItems:'center', gap:9, padding:'8px 10px', borderRadius:6,
-              fontFamily:T.sans, fontSize:12, fontWeight:500,
-              color: activeNav===n.id ? T.teal : T.w40,
-              background: activeNav===n.id ? T.tealGlow : 'transparent',
-              border: activeNav===n.id ? `1px solid rgba(45,212,176,0.15)` : '1px solid transparent',
+              fontFamily:C.sans, fontSize:12, fontWeight:500,
+              color: activeNav===n.id ? C.teal : C.w40,
+              background: activeNav===n.id ? C.tealGlow : 'transparent',
+              border: activeNav===n.id ? `1px solid ${C.teal}33` : '1px solid transparent',
               cursor:'pointer', marginBottom:1, transition:'all 0.15s',
             }}>
               <span style={{ opacity:0.7 }}>{n.icon}</span>
@@ -1325,14 +1326,14 @@ const ClinicianDashboard = () => {
             </div>
           ))}
         </div>
-        <div style={{ padding:'12px 10px', borderTop:`1px solid ${T.border}` }}>
+        <div style={{ padding:'12px 10px', borderTop:`1px solid ${C.border}` }}>
           <div style={{ display:'flex', alignItems:'center', gap:8, padding:'8px' }}>
-            <div style={{ width:28, height:28, borderRadius:'50%', background:T.tealDark,
+            <div style={{ width:28, height:28, borderRadius:'50%', background:C.tealDark,
               display:'flex', alignItems:'center', justifyContent:'center',
-              fontFamily:T.sans, fontSize:10, fontWeight:700, color:T.teal, flexShrink:0 }}>SM</div>
+              fontFamily:C.sans, fontSize:10, fontWeight:700, color:C.teal, flexShrink:0 }}>SM</div>
             <div>
-              <div style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70 }}>Dr. S. Mitchell</div>
-              <div style={{ fontFamily:T.sans, fontSize:10, color:T.w30 }}>Pearl Psych. Institute</div>
+              <div style={{ fontFamily:C.sans, fontSize:11, fontWeight:600, color:C.w70 }}>Dr. S. Mitchell</div>
+              <div style={{ fontFamily:C.sans, fontSize:10, color:C.w30 }}>Pearl Psych. Institute</div>
             </div>
           </div>
         </div>
@@ -1340,17 +1341,17 @@ const ClinicianDashboard = () => {
 
       {/* Main area — swap based on nav */}
       <div style={{ overflow:'auto', display:'flex', flexDirection:'column', flex:1, minHeight:0 }}>
-        {activeNav === 'dashboard' && <DashboardView elapsed={elapsed} />}
-        {activeNav === 'patients'  && <PatientsView />}
-        {activeNav === 'sessions'  && <SessionsView />}
-        {activeNav === 'protocols' && <SoundframeLibraryView />}
-        {activeNav === 'new'       && <NewReleaseView />}
+        {activeNav === 'dashboard' && <DashboardView elapsed={elapsed} C={C} />}
+        {activeNav === 'patients'  && <PatientsView C={C} />}
+        {activeNav === 'sessions'  && <SessionsView C={C} />}
+        {activeNav === 'protocols' && <SoundframeLibraryView C={C} />}
+        {activeNav === 'new'       && <NewReleaseView C={C} />}
         {activeNav === 'settings'  && (
           <div style={{ display:'flex', flex:1, alignItems:'center', justifyContent:'center',
-            flexDirection:'column', gap:12, color:T.w20 }}>
+            flexDirection:'column', gap:12 }}>
             <div style={{ fontSize:32 }}>⚙</div>
-            <div style={{ fontFamily:T.serif, fontSize:22, fontStyle:'italic', color:T.w40 }}>Preferences</div>
-            <div style={{ fontFamily:T.sans, fontSize:12, color:T.w20 }}>Coming in the next demo update</div>
+            <div style={{ fontFamily:C.serif, fontSize:22, fontStyle:'italic', color:C.w40 }}>Preferences</div>
+            <div style={{ fontFamily:C.sans, fontSize:12, color:C.w20 }}>Coming in the next demo update</div>
           </div>
         )}
       </div>
@@ -1612,10 +1613,96 @@ const PlusIcon  = () => <svg width="13" height="13" viewBox="0 0 14 14" fill="no
 const GearIcon  = () => <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="7" cy="7" r="2"/><path d="M7 1v2M7 11v2M1 7h2M11 7h2" strokeLinecap="round"/></svg>;
 
 /* ══════════════════════════════════════════
+   LIGHT MODE THEME TOKENS
+══════════════════════════════════════════ */
+const LT = {
+  // backgrounds
+  bg:       '#f8faf9',
+  bg1:      '#f0f4f2',
+  bg2:      '#ffffff',
+  bg3:      '#e8efec',
+  surface:  '#ffffff',
+  surface2: '#f0f4f2',
+  // teal — deeper for legibility on white
+  teal:      '#1a9e87',
+  tealDark:  '#d0f0ea',
+  tealGlow:  'rgba(26,158,135,0.1)',
+  // gold unchanged
+  gold:      '#b8893a',
+  goldPale:  'rgba(184,137,58,0.1)',
+  // red unchanged
+  red:       '#b04040',
+  // text — dark on white
+  white:     '#0f1a17',
+  w70:       'rgba(15,26,23,0.7)',
+  w50:       'rgba(15,26,23,0.5)',
+  w40:       'rgba(15,26,23,0.4)',
+  w30:       'rgba(15,26,23,0.3)',
+  w20:       'rgba(15,26,23,0.2)',
+  w10:       'rgba(15,26,23,0.1)',
+  w05:       'rgba(15,26,23,0.05)',
+  // borders — subtle on white
+  border:    'rgba(15,26,23,0.1)',
+  border2:   'rgba(15,26,23,0.16)',
+  mono:      "'JetBrains Mono',monospace",
+  serif:     "'Instrument Serif',serif",
+  sans:      "'Syne',sans-serif",
+};
+
+/* ── Theme-aware pill toggle ── */
+const ThemeToggle = ({ light, onToggle }) => (
+  <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+    <span style={{ fontFamily:T.sans, fontSize:10, fontWeight:600,
+      color: light ? 'rgba(240,244,242,0.35)' : 'rgba(240,244,242,0.5)',
+      letterSpacing:'0.04em', userSelect:'none' }}>
+      ☾
+    </span>
+    <div
+      onClick={onToggle}
+      style={{
+        width:44, height:24, borderRadius:12, cursor:'pointer',
+        background: light ? LT.teal : T.tealDark,
+        border: `1px solid ${light ? LT.teal : 'rgba(45,212,176,0.3)'}`,
+        position:'relative', transition:'background 0.3s, border-color 0.3s',
+        flexShrink:0,
+      }}
+    >
+      <div style={{
+        position:'absolute', top:3,
+        left: light ? 22 : 3,
+        width:16, height:16, borderRadius:'50%',
+        background: light ? '#ffffff' : T.teal,
+        transition:'left 0.25s, background 0.25s',
+        boxShadow:'0 1px 4px rgba(0,0,0,0.25)',
+      }} />
+    </div>
+    <span style={{ fontFamily:T.sans, fontSize:10, fontWeight:600,
+      color: light ? 'rgba(240,244,242,0.9)' : 'rgba(240,244,242,0.35)',
+      letterSpacing:'0.04em', userSelect:'none' }}>
+      ☀
+    </span>
+  </div>
+);
+
+/* ══════════════════════════════════════════
    ROOT
 ══════════════════════════════════════════ */
 export default function App() {
   const [surface, setSurface] = useState('clinician');
+
+  // Persist light mode preference in localStorage
+  const [lightMode, setLightMode] = useState(() => {
+    try { return localStorage.getItem('psysonics-theme') === 'light'; }
+    catch { return false; }
+  });
+  const toggleTheme = () => {
+    setLightMode(v => {
+      const next = !v;
+      try { localStorage.setItem('psysonics-theme', next ? 'light' : 'dark'); } catch {}
+      return next;
+    });
+  };
+
   const tabs = [
     { id:'clinician', label:'Clinician Dashboard', sub:'Session management + Soundframe™ protocol control' },
     { id:'portal',    label:'Patient Portal',      sub:'Integration soundframe access' },
@@ -1626,6 +1713,7 @@ export default function App() {
     portal:'portal.psysonics.co/integration',
     mobile:'PsySonics iOS · Offline',
   };
+
   return (
     <div style={{ fontFamily:T.sans, background:T.bg, height:'100vh', display:'flex', flexDirection:'column', overflow:'hidden' }}>
       <FontLoader />
@@ -1638,10 +1726,12 @@ export default function App() {
         input::placeholder{color:rgba(240,244,242,0.2)}
       `}</style>
 
-      {/* Top nav */}
+      {/* Top nav — always dark */}
       <div style={{ height:54, borderBottom:`1px solid ${T.border}`, display:'flex', alignItems:'center',
         padding:'0 20px', background:'rgba(10,12,11,0.97)', backdropFilter:'blur(20px)',
         justifyContent:'space-between', flexShrink:0, gap:12 }}>
+
+        {/* Logo */}
         <div style={{ display:'flex', alignItems:'center', gap:9 }}>
           <div style={{ width:28, height:28, border:`1.5px solid ${T.teal}`, borderRadius:5,
             display:'flex', alignItems:'center', justifyContent:'center' }}>
@@ -1656,26 +1746,45 @@ export default function App() {
           </span>
           <Badge color={T.gold}>Demo</Badge>
         </div>
+
+        {/* Surface tabs */}
         <div style={{ display:'flex', gap:5 }}>
           {tabs.map(t=>(
             <button key={t.id} onClick={()=>setSurface(t.id)} style={{
               fontFamily:T.sans, fontSize:11, fontWeight:600,
               padding:'6px 14px', borderRadius:5, cursor:'pointer', transition:'all 0.2s',
-              color: surface===t.id?T.teal:T.w40,
-              background: surface===t.id?T.tealGlow:'transparent',
-              border: `1px solid ${surface===t.id?'rgba(45,212,176,0.2)':T.border}`,
+              color: surface===t.id ? T.teal : T.w40,
+              background: surface===t.id ? T.tealGlow : 'transparent',
+              border: `1px solid ${surface===t.id ? 'rgba(45,212,176,0.2)' : T.border}`,
               whiteSpace:'nowrap',
             }}>{t.label}</button>
           ))}
         </div>
-        <div style={{ display:'flex', alignItems:'center', gap:6 }}>
-          <span style={{ width:7, height:7, borderRadius:'50%', background:T.teal,
-            animation:'psyPulse 2s infinite', display:'inline-block' }} />
-          <span style={{ fontFamily:T.mono, fontSize:10, color:T.w30 }}>psysonics.co</span>
+
+        {/* Right side: toggle (only visible on clinician) + domain */}
+        <div style={{ display:'flex', alignItems:'center', gap:16 }}>
+          {surface === 'clinician' && (
+            <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+              <span style={{ fontFamily:T.sans, fontSize:10, fontWeight:600,
+                color:'rgba(240,244,242,0.35)', letterSpacing:'0.06em', textTransform:'uppercase' }}>
+                Dark
+              </span>
+              <ThemeToggle light={lightMode} onToggle={toggleTheme} />
+              <span style={{ fontFamily:T.sans, fontSize:10, fontWeight:600,
+                color:'rgba(240,244,242,0.35)', letterSpacing:'0.06em', textTransform:'uppercase' }}>
+                Light
+              </span>
+            </div>
+          )}
+          <div style={{ display:'flex', alignItems:'center', gap:6 }}>
+            <span style={{ width:7, height:7, borderRadius:'50%', background:T.teal,
+              animation:'psyPulse 2s infinite', display:'inline-block' }} />
+            <span style={{ fontFamily:T.mono, fontSize:10, color:T.w30 }}>psysonics.co</span>
+          </div>
         </div>
       </div>
 
-      {/* Surface label */}
+      {/* Surface label strip */}
       <div style={{ height:34, background:T.bg1, borderBottom:`1px solid ${T.border}`,
         display:'flex', alignItems:'center', padding:'0 20px', gap:10, flexShrink:0 }}>
         {tabs.filter(t=>t.id===surface).map(t=>(
@@ -1683,39 +1792,68 @@ export default function App() {
             <span style={{ fontFamily:T.sans, fontSize:12, fontWeight:700, color:T.white }}>{t.label}</span>
             <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>·</span>
             <span style={{ fontFamily:T.sans, fontSize:11, color:T.w40 }}>{t.sub}</span>
+            {surface==='clinician' && (
+              <span style={{ fontFamily:T.sans, fontSize:10, color: lightMode ? '#1a9e87' : T.teal,
+                background: lightMode ? 'rgba(26,158,135,0.15)' : T.tealGlow,
+                border:`1px solid ${lightMode ? 'rgba(26,158,135,0.3)' : 'rgba(45,212,176,0.2)'}`,
+                padding:'2px 9px', borderRadius:20, fontWeight:600, marginLeft:4 }}>
+                {lightMode ? '☀ Light mode' : '☾ Dark mode'}
+              </span>
+            )}
           </div>
         ))}
       </div>
 
       {/* Browser chrome + surface */}
       <div style={{ flex:1, padding:16, overflow:'hidden', display:'flex', flexDirection:'column' }}>
-        <div style={{ flex:1, background:T.bg2, border:`1px solid ${T.border2}`, borderRadius:12,
-          overflow:'hidden', display:'flex', flexDirection:'column',
-          boxShadow:`0 0 0 1px rgba(45,212,176,0.05),0 24px 80px rgba(0,0,0,0.6)` }}>
-          <div style={{ height:38, background:T.bg3, borderBottom:`1px solid ${T.border}`,
-            display:'flex', alignItems:'center', padding:'0 13px', gap:12, flexShrink:0 }}>
+        <div style={{
+          flex:1,
+          background: surface==='clinician' ? (lightMode ? LT.bg2 : T.bg2) : T.bg2,
+          border:`1px solid ${surface==='clinician' ? (lightMode ? LT.border2 : T.border2) : T.border2}`,
+          borderRadius:12, overflow:'hidden', display:'flex', flexDirection:'column',
+          boxShadow: lightMode && surface==='clinician'
+            ? '0 0 0 1px rgba(26,158,135,0.08), 0 24px 80px rgba(0,0,0,0.12)'
+            : '0 0 0 1px rgba(45,212,176,0.05), 0 24px 80px rgba(0,0,0,0.6)',
+          transition:'background 0.3s, border-color 0.3s, box-shadow 0.3s',
+        }}>
+          {/* Browser chrome bar */}
+          <div style={{
+            height:38,
+            background: surface==='clinician' ? (lightMode ? LT.bg3 : T.bg3) : T.bg3,
+            borderBottom:`1px solid ${surface==='clinician' ? (lightMode ? LT.border : T.border) : T.border}`,
+            display:'flex', alignItems:'center', padding:'0 13px', gap:12, flexShrink:0,
+            transition:'background 0.3s',
+          }}>
             <div style={{ display:'flex', gap:5 }}>
               {['#ff5f56','#ffbd2e','#27c93f'].map((c,i)=>(
                 <div key={i} style={{ width:9, height:9, borderRadius:'50%', background:c }} />
               ))}
             </div>
-            <div style={{ flex:1, maxWidth:320, margin:'0 auto', background:T.bg2,
-              border:`1px solid ${T.border}`, borderRadius:5, padding:'4px 10px',
+            <div style={{
+              flex:1, maxWidth:320, margin:'0 auto',
+              background: surface==='clinician' ? (lightMode ? '#ffffff' : T.bg2) : T.bg2,
+              border:`1px solid ${surface==='clinician' ? (lightMode ? LT.border : T.border) : T.border}`,
+              borderRadius:5, padding:'4px 10px',
               display:'flex', alignItems:'center', gap:6,
-              fontFamily:T.mono, fontSize:10, color:T.w40 }}>
-              <span style={{ color:T.teal, fontSize:10 }}>🔒</span>
+              fontFamily:T.mono, fontSize:10,
+              color: surface==='clinician' ? (lightMode ? LT.w40 : T.w40) : T.w40,
+              transition:'background 0.3s',
+            }}>
+              <span style={{ color: surface==='clinician' ? (lightMode ? LT.teal : T.teal) : T.teal, fontSize:10 }}>🔒</span>
               {urls[surface]}
             </div>
           </div>
+
+          {/* Surface content */}
           <div style={{ flex:1, overflow:'hidden' }}>
-            {surface==='clinician' && <ClinicianDashboard />}
+            {surface==='clinician' && <ClinicianDashboard theme={lightMode ? LT : T} />}
             {surface==='portal'    && <PatientPortal />}
             {surface==='mobile'    && <MobileApp />}
           </div>
         </div>
       </div>
 
-      {/* Footer */}
+      {/* Footer — always dark */}
       <div style={{ height:32, borderTop:`1px solid ${T.border}`, display:'flex', alignItems:'center',
         padding:'0 20px', justifyContent:'space-between', flexShrink:0 }}>
         <span style={{ fontFamily:T.sans, fontSize:10, color:T.w20 }}>© 2025 PsySonics, PBC · Asheville, NC · SDVOSB</span>
