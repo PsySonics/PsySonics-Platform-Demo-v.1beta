@@ -234,99 +234,110 @@ const PatientsView = () => {
         ))}
       </div>
 
-      {/* Patient rows */}
-      {filtered.map(p => (
-        <div key={p.id} onClick={() => setSelected(selected?.id===p.id ? null : p)} style={{
-          display:'grid', gridTemplateColumns:'32px 1fr 120px 110px 80px 80px 90px',
-          gap:12, padding:'10px 14px', borderRadius:8, marginBottom:4, cursor:'pointer',
-          background: selected?.id===p.id ? T.tealGlow : T.surface,
-          border:`1px solid ${selected?.id===p.id ? 'rgba(45,212,176,0.2)' : T.border}`,
-          transition:'all 0.15s', alignItems:'center',
-        }}>
-          <div style={{ width:28, height:28, borderRadius:'50%', background:T.tealDark,
-            display:'flex', alignItems:'center', justifyContent:'center',
-            fontFamily:T.sans, fontSize:9, fontWeight:700, color:T.teal }}>
-            {p.initials}
-          </div>
-          <div>
-            <div style={{ fontFamily:T.sans, fontSize:12, fontWeight:600, color:T.w70 }}>{p.name}</div>
-            <div style={{ fontFamily:T.sans, fontSize:10, color:T.w30, marginTop:1 }}>{p.diagnosis}</div>
-          </div>
-          <div>
-            <Badge color={compoundColor(p.compound)}>{p.compound}</Badge>
-          </div>
-          <div style={{ fontFamily:T.sans, fontSize:11, color:p.nextDate==='—'?T.w20:T.w50 }}>
-            {p.nextDate}
-          </div>
-          <div style={{ fontFamily:T.mono, fontSize:12, color:T.w50 }}>{p.sessions}</div>
-          <div>
-            {p.portal
-              ? <Badge color={T.teal}>Active</Badge>
-              : <Badge color={T.w30}>Inactive</Badge>}
-          </div>
-          <div>
-            <Badge color={p.status==='active'?T.teal:p.status==='upcoming'?T.gold:T.w30}>
-              {p.status}
-            </Badge>
-          </div>
-        </div>
-      ))}
+      {/* Patient rows — detail opens inline below each row */}
+      {filtered.map(p => {
+        const isOpen = selected?.id === p.id;
+        return (
+          <div key={p.id}>
+            {/* Row */}
+            <div onClick={() => setSelected(isOpen ? null : p)} style={{
+              display:'grid', gridTemplateColumns:'32px 1fr 120px 110px 80px 80px 90px',
+              gap:12, padding:'10px 14px',
+              borderRadius: isOpen ? '8px 8px 0 0' : 8,
+              marginBottom: isOpen ? 0 : 4,
+              cursor:'pointer',
+              background: isOpen ? T.tealGlow : T.surface,
+              border:`1px solid ${isOpen ? 'rgba(45,212,176,0.2)' : T.border}`,
+              transition:'all 0.15s', alignItems:'center',
+            }}>
+              <div style={{ width:28, height:28, borderRadius:'50%', background:T.tealDark,
+                display:'flex', alignItems:'center', justifyContent:'center',
+                fontFamily:T.sans, fontSize:9, fontWeight:700, color:T.teal }}>
+                {p.initials}
+              </div>
+              <div>
+                <div style={{ fontFamily:T.sans, fontSize:12, fontWeight:600, color:T.w70 }}>{p.name}</div>
+                <div style={{ fontFamily:T.sans, fontSize:10, color:T.w30, marginTop:1 }}>{p.diagnosis}</div>
+              </div>
+              <div><Badge color={compoundColor(p.compound)}>{p.compound}</Badge></div>
+              <div style={{ fontFamily:T.sans, fontSize:11, color:p.nextDate==='—'?T.w20:T.w50 }}>
+                {p.nextDate}
+              </div>
+              <div style={{ fontFamily:T.mono, fontSize:12, color:T.w50 }}>{p.sessions}</div>
+              <div>
+                {p.portal ? <Badge color={T.teal}>Active</Badge> : <Badge color={T.w30}>Inactive</Badge>}
+              </div>
+              <div>
+                <Badge color={p.status==='active'?T.teal:p.status==='upcoming'?T.gold:T.w30}>
+                  {p.status}
+                </Badge>
+              </div>
+            </div>
 
-      {/* Expanded patient detail */}
-      {selected && (
-        <div style={{ marginTop:8, background:T.bg2, border:`1px solid ${T.border2}`,
-          borderRadius:10, padding:20, display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:16 }}>
-          <div>
-            <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
-              textTransform:'uppercase', color:T.teal, marginBottom:8 }}>Patient Info</div>
-            {[
-              ['Protocol',  selected.protocol],
-              ['Clinician', selected.clinician],
-              ['Joined',    selected.joined],
-              ['Sessions',  `${selected.sessions} total`],
-            ].map(([k,v]) => (
-              <div key={k} style={{ display:'flex', justifyContent:'space-between',
-                padding:'5px 0', borderBottom:`1px solid ${T.border}` }}>
-                <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>{k}</span>
-                <span style={{ fontFamily:T.sans, fontSize:11, color:T.w70 }}>{v}</span>
+            {/* Inline detail panel */}
+            {isOpen && (
+              <div style={{
+                background:'rgba(45,212,176,0.06)',
+                border:'1px solid rgba(45,212,176,0.2)',
+                borderTop:'none',
+                borderRadius:'0 0 8px 8px',
+                padding:16, marginBottom:4,
+                display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:16,
+              }}>
+                <div>
+                  <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
+                    textTransform:'uppercase', color:T.teal, marginBottom:8 }}>Patient Info</div>
+                  {[
+                    ['Protocol',  p.protocol],
+                    ['Clinician', p.clinician],
+                    ['Joined',    p.joined],
+                    ['Sessions',  `${p.sessions} total`],
+                  ].map(([k,v]) => (
+                    <div key={k} style={{ display:'flex', justifyContent:'space-between',
+                      padding:'5px 0', borderBottom:`1px solid ${T.border}` }}>
+                      <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>{k}</span>
+                      <span style={{ fontFamily:T.sans, fontSize:11, color:T.w70 }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
+                    textTransform:'uppercase', color:T.teal, marginBottom:8 }}>Schedule</div>
+                  {[
+                    ['Next session',  p.nextDate],
+                    ['Last session',  p.lastDate],
+                    ['Portal access', p.portal ? 'Active' : 'Not invited'],
+                  ].map(([k,v]) => (
+                    <div key={k} style={{ display:'flex', justifyContent:'space-between',
+                      padding:'5px 0', borderBottom:`1px solid ${T.border}` }}>
+                      <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>{k}</span>
+                      <span style={{ fontFamily:T.sans, fontSize:11, color:T.w70 }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ display:'flex', flexDirection:'column', gap:8, justifyContent:'flex-end' }}>
+                  {!p.portal && (
+                    <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.bg,
+                      background:T.teal, border:'none', padding:'8px 0', borderRadius:6, cursor:'pointer' }}>
+                      Invite to Portal
+                    </button>
+                  )}
+                  <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70,
+                    background:T.surface2, border:`1px solid ${T.border2}`, padding:'8px 0',
+                    borderRadius:6, cursor:'pointer' }}>
+                    Schedule Session
+                  </button>
+                  <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70,
+                    background:T.surface2, border:`1px solid ${T.border2}`, padding:'8px 0',
+                    borderRadius:6, cursor:'pointer' }}>
+                    View Session History
+                  </button>
+                </div>
               </div>
-            ))}
-          </div>
-          <div>
-            <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
-              textTransform:'uppercase', color:T.teal, marginBottom:8 }}>Schedule</div>
-            {[
-              ['Next session',  selected.nextDate],
-              ['Last session',  selected.lastDate],
-              ['Portal access', selected.portal ? 'Active' : 'Not invited'],
-            ].map(([k,v]) => (
-              <div key={k} style={{ display:'flex', justifyContent:'space-between',
-                padding:'5px 0', borderBottom:`1px solid ${T.border}` }}>
-                <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>{k}</span>
-                <span style={{ fontFamily:T.sans, fontSize:11, color:T.w70 }}>{v}</span>
-              </div>
-            ))}
-          </div>
-          <div style={{ display:'flex', flexDirection:'column', gap:8, justifyContent:'flex-end' }}>
-            {!selected.portal && (
-              <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.bg,
-                background:T.teal, border:'none', padding:'8px 0', borderRadius:6, cursor:'pointer' }}>
-                Invite to Portal
-              </button>
             )}
-            <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70,
-              background:T.surface2, border:`1px solid ${T.border2}`, padding:'8px 0',
-              borderRadius:6, cursor:'pointer' }}>
-              Schedule Session
-            </button>
-            <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70,
-              background:T.surface2, border:`1px solid ${T.border2}`, padding:'8px 0',
-              borderRadius:6, cursor:'pointer' }}>
-              View Session History
-            </button>
           </div>
-        </div>
-      )}
+        );
+      })}
 
       {filtered.length === 0 && (
         <div style={{ textAlign:'center', padding:40, color:T.w30, fontFamily:T.sans, fontSize:13 }}>
@@ -433,112 +444,117 @@ const SessionsView = () => {
             ))}
           </div>
 
-          {/* Session rows */}
-          {sessions.map(s => (
-            <div key={s.id} onClick={() => setSelected(selected?.id===s.id ? null : s)} style={{
-              display:'grid', gridTemplateColumns:'20px 36px 1fr 110px 90px 80px 100px',
-              gap:12, padding:'10px 12px', borderRadius:8, marginBottom:3,
-              cursor:'pointer', alignItems:'center', transition:'all 0.15s',
-              background: selected?.id===s.id ? T.tealGlow : T.surface,
-              border:`1px solid ${selected?.id===s.id?'rgba(45,212,176,0.2)':T.border}`,
-            }}>
-              <Dot
-                color={statusColor(s.status)}
-                pulse={s.status==='live'}
-              />
-              <div style={{ width:30, height:30, borderRadius:'50%', background:T.tealDark,
-                display:'flex', alignItems:'center', justifyContent:'center',
-                fontFamily:T.sans, fontSize:9, fontWeight:700, color:T.teal }}>
-                {s.initials}
-              </div>
-              <div>
-                <div style={{ fontFamily:T.sans, fontSize:12, fontWeight:600, color:T.w70 }}>
-                  {s.patient}
+          {/* Session rows — detail opens inline below each row */}
+          {sessions.map(s => {
+            const isOpen = selected?.id === s.id;
+            return (
+              <div key={s.id}>
+                {/* Row */}
+                <div onClick={() => setSelected(isOpen ? null : s)} style={{
+                  display:'grid', gridTemplateColumns:'20px 36px 1fr 110px 90px 80px 100px',
+                  gap:12, padding:'10px 12px',
+                  borderRadius: isOpen ? '8px 8px 0 0' : 8,
+                  marginBottom: isOpen ? 0 : 3,
+                  cursor:'pointer', alignItems:'center', transition:'all 0.15s',
+                  background: isOpen ? T.tealGlow : T.surface,
+                  border:`1px solid ${isOpen ? 'rgba(45,212,176,0.2)' : T.border}`,
+                }}>
+                  <Dot color={statusColor(s.status)} pulse={s.status==='live'} />
+                  <div style={{ width:30, height:30, borderRadius:'50%', background:T.tealDark,
+                    display:'flex', alignItems:'center', justifyContent:'center',
+                    fontFamily:T.sans, fontSize:9, fontWeight:700, color:T.teal }}>
+                    {s.initials}
+                  </div>
+                  <div>
+                    <div style={{ fontFamily:T.sans, fontSize:12, fontWeight:600, color:T.w70 }}>
+                      {s.patient}
+                    </div>
+                    <div style={{ fontFamily:T.sans, fontSize:10, color:T.w30, marginTop:1 }}>
+                      {s.time} · {s.soundframe}
+                    </div>
+                  </div>
+                  <div><Badge color={compoundColor(s.compound)}>{s.compound}</Badge></div>
+                  <div style={{ fontFamily:T.sans, fontSize:11, color:T.w50 }}>{s.room}</div>
+                  <div style={{ fontFamily:T.mono, fontSize:11, color:T.w40 }}>
+                    {s.status==='live' ? elapsed : s.duration}
+                  </div>
+                  <div><Badge color={statusColor(s.status)}>{statusLabel(s.status)}</Badge></div>
                 </div>
-                <div style={{ fontFamily:T.sans, fontSize:10, color:T.w30, marginTop:1 }}>
-                  {s.time} · {s.soundframe}
-                </div>
+
+                {/* Inline detail panel */}
+                {isOpen && (
+                  <div style={{
+                    background:'rgba(45,212,176,0.06)',
+                    border:'1px solid rgba(45,212,176,0.2)',
+                    borderTop:'none',
+                    borderRadius:'0 0 8px 8px',
+                    padding:16, marginBottom:3,
+                    display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:20,
+                  }}>
+                    <div>
+                      <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
+                        textTransform:'uppercase', color:T.teal, marginBottom:8 }}>Session Detail</div>
+                      {[
+                        ['Patient',  s.patient],
+                        ['Date',     s.date],
+                        ['Time',     s.time],
+                        ['Duration', s.duration],
+                        ['Room',     s.room],
+                      ].map(([k,v]) => (
+                        <div key={k} style={{ display:'flex', justifyContent:'space-between',
+                          padding:'5px 0', borderBottom:`1px solid ${T.border}` }}>
+                          <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>{k}</span>
+                          <span style={{ fontFamily:T.sans, fontSize:11, color:T.w70 }}>{v}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
+                        textTransform:'uppercase', color:T.teal, marginBottom:8 }}>Soundframe™</div>
+                      {[
+                        ['Protocol',   s.protocol],
+                        ['Soundframe', s.soundframe],
+                        ['Compound',   s.compound],
+                        ['Clinician',  s.clinician],
+                      ].map(([k,v]) => (
+                        <div key={k} style={{ display:'flex', justifyContent:'space-between',
+                          padding:'5px 0', borderBottom:`1px solid ${T.border}` }}>
+                          <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>{k}</span>
+                          <span style={{ fontFamily:T.sans, fontSize:11, color:T.w70 }}>{v}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div style={{ display:'flex', flexDirection:'column', gap:8, justifyContent:'flex-end' }}>
+                      {s.status === 'live' && (
+                        <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.bg,
+                          background:T.teal, border:'none', padding:'8px 0', borderRadius:6, cursor:'pointer' }}>
+                          ▶ Open Live Session
+                        </button>
+                      )}
+                      {s.status === 'scheduled' && (
+                        <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.bg,
+                          background:T.teal, border:'none', padding:'8px 0', borderRadius:6, cursor:'pointer' }}>
+                          Launch Session
+                        </button>
+                      )}
+                      <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70,
+                        background:T.surface2, border:`1px solid ${T.border2}`, padding:'8px 0',
+                        borderRadius:6, cursor:'pointer' }}>
+                        {s.status==='complete' ? 'View Session Notes' : 'Edit Session'}
+                      </button>
+                      <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70,
+                        background:T.surface2, border:`1px solid ${T.border2}`, padding:'8px 0',
+                        borderRadius:6, cursor:'pointer' }}>
+                        View Patient Profile
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
-              <div>
-                <Badge color={compoundColor(s.compound)}>{s.compound}</Badge>
-              </div>
-              <div style={{ fontFamily:T.sans, fontSize:11, color:T.w50 }}>{s.room}</div>
-              <div style={{ fontFamily:T.mono, fontSize:11, color:T.w40 }}>
-                {s.status==='live' ? elapsed : s.duration}
-              </div>
-              <div>
-                <Badge color={statusColor(s.status)}>{statusLabel(s.status)}</Badge>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ))}
-
-      {/* Expanded session detail */}
-      {selected && (
-        <div style={{ marginTop:4, background:T.bg2, border:`1px solid ${T.border2}`,
-          borderRadius:10, padding:20 }}>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:20 }}>
-            <div>
-              <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
-                textTransform:'uppercase', color:T.teal, marginBottom:8 }}>Session Detail</div>
-              {[
-                ['Patient',    selected.patient],
-                ['Date',       selected.date],
-                ['Time',       selected.time],
-                ['Duration',   selected.duration],
-                ['Room',       selected.room],
-              ].map(([k,v]) => (
-                <div key={k} style={{ display:'flex', justifyContent:'space-between',
-                  padding:'5px 0', borderBottom:`1px solid ${T.border}` }}>
-                  <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>{k}</span>
-                  <span style={{ fontFamily:T.sans, fontSize:11, color:T.w70 }}>{v}</span>
-                </div>
-              ))}
-            </div>
-            <div>
-              <div style={{ fontFamily:T.sans, fontSize:10, fontWeight:700, letterSpacing:'0.08em',
-                textTransform:'uppercase', color:T.teal, marginBottom:8 }}>Soundframe™</div>
-              {[
-                ['Protocol',   selected.protocol],
-                ['Soundframe', selected.soundframe],
-                ['Compound',   selected.compound],
-                ['Clinician',  selected.clinician],
-              ].map(([k,v]) => (
-                <div key={k} style={{ display:'flex', justifyContent:'space-between',
-                  padding:'5px 0', borderBottom:`1px solid ${T.border}` }}>
-                  <span style={{ fontFamily:T.sans, fontSize:11, color:T.w30 }}>{k}</span>
-                  <span style={{ fontFamily:T.sans, fontSize:11, color:T.w70 }}>{v}</span>
-                </div>
-              ))}
-            </div>
-            <div style={{ display:'flex', flexDirection:'column', gap:8, justifyContent:'flex-end' }}>
-              {selected.status === 'live' && (
-                <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.bg,
-                  background:T.teal, border:'none', padding:'8px 0', borderRadius:6, cursor:'pointer' }}>
-                  ▶ Open Live Session
-                </button>
-              )}
-              {selected.status === 'scheduled' && (
-                <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.bg,
-                  background:T.teal, border:'none', padding:'8px 0', borderRadius:6, cursor:'pointer' }}>
-                  Launch Session
-                </button>
-              )}
-              <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70,
-                background:T.surface2, border:`1px solid ${T.border2}`, padding:'8px 0',
-                borderRadius:6, cursor:'pointer' }}>
-                {selected.status==='complete' ? 'View Session Notes' : 'Edit Session'}
-              </button>
-              <button style={{ fontFamily:T.sans, fontSize:11, fontWeight:600, color:T.w70,
-                background:T.surface2, border:`1px solid ${T.border2}`, padding:'8px 0',
-                borderRadius:6, cursor:'pointer' }}>
-                View Patient Profile
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {filtered.length === 0 && (
         <div style={{ textAlign:'center', padding:40, color:T.w30, fontFamily:T.sans, fontSize:13 }}>
